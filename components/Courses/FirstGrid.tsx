@@ -11,7 +11,7 @@ import Reviews from "./Reviews";
 const FirstGrid = () => {
   const [active, setActive] = useState("overview");
   return (
-    <div className="col-span-9">
+    <div className="col-span-9 max-xl:col-span-12">
       <Image
         src={courseimage}
         alt="course image"

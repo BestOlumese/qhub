@@ -9,7 +9,7 @@ const useVerifyForm = () => {
     if (el) {
       inputRefs.current[index] = el;
     }
-  };
+  }; 
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import Button from "../Button";
@@ -5,25 +6,28 @@ const FormFooter = ({
   buttonText,
   showExtraText,
   isSignUp,
-  isLogin,
+
+  error,
 }: {
   buttonText: string;
   showExtraText: boolean;
   isSignUp?: boolean;
-  isLogin?: boolean;
+
+  error: string | null;
 }) => {
   return (
     <div className="space-y-4">
-      <div className="my-4 w-full">
-        <Button text={buttonText} />
+      <div className="my-4 w-full flex items-center flex-col">
+        <Button text={buttonText} type="submit"/>
+        {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
       {showExtraText && (
-        <p className="text-sm text-center">
+        <p className="text-xs text-center">
           {isSignUp ? (
             <span>
               Already have an account?{" "}
               <Link href="/login" className="text-primary">
-                Login in
+                Log in
               </Link>
             </span>
           ) : (

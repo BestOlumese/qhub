@@ -38,7 +38,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       >
         <textarea
           className={cn(
-            `flex h-36 w-full border-none bg-gray-50  text-black  shadow-TextArea rounded-md px-3 py-2 text-sm   placeholder:text-neutral-400 
+            `flex h-24 w-full border-none bg-gray-50  text-black  shadow-TextArea rounded-md px-3 py-2 text-sm   placeholder:text-neutral-400 
           focus-visible:outline-none focus-visible:ring-[2px]  focus-visible:ring-neutral-400 
            disabled:cursor-not-allowed disabled:opacity-50
          

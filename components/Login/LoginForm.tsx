@@ -3,21 +3,30 @@ import LabelInputContainer from "@/components/ui/Form/LabelInputContainer";
 import { Label } from "@/components/ui/Form/Label";
 import { Input } from "@/components/ui/Form/Input";
 import Password from "@/components/Register/Password";
-const LoginForm = () => {
+
+type LoginFormProps = {
+  emailRef: React.RefObject<HTMLInputElement>;
+  passwordRef: React.RefObject<HTMLInputElement>;
+};
+
+const LoginForm: React.FC<LoginFormProps> = ({ emailRef, passwordRef }) => {
   return (
-    <form className="mt-10">
+    <div className="mt-10">
       <LabelInputContainer className="my-4">
-        <Label htmlFor="name">Email Address</Label>
+        <Label htmlFor="email">Email Address</Label>
         <Input
           id="email"
           placeholder="linkvault@dax.com"
           type="email"
-          // value={email}
-          // onChange={handleEmailChange}
+          ref={emailRef}
+          autoComplete="email"
         />
       </LabelInputContainer>
-      <Password />
-    </form>
+      <Password
+        label="Password"
+        ref={passwordRef}
+      />
+    </div>
   );
 };
 

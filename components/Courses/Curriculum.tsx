@@ -60,7 +60,7 @@ const Curriculum = () => {
                 {module.lessons.map((lesson, i) => (
                   <div
                     key={i}
-                    className="border-b border-b-[#333]/10 my-4 py-4 pb-8 w-full flex justify-between items-center"
+                    className="border-b border-b-[#333]/10 md:my-4 my-2 py-2 md:py-4 md:pb-8 w-full flex justify-between items-center"
                   >
                     <p className="text-gray-500 w-[90%]">{lesson.content}</p>
                     <div className="bg-black w-6 h-6 cursor-pointer rounded-full flex items-center justify-center">

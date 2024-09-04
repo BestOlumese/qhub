@@ -6,14 +6,14 @@ import Image from "next/image";
 import Button from "../ui/Button";
 const SecondGrid = () => {
   return (
-    <div className="bg-primary-light col-span-3 text-sm h-fit sticky top-0">
+    <div className="bg-primary-light col-span-3 text-sm h-fit sticky top-0 max-xl:hidden">
       <div className="w-fit h-fit relative">
         <Image src={woman} alt="Woman Speaking" width={500} height={500} />
         <div className="border border-white rounded-full flex items-center text-xl justify-center w-14 h-14 absolute top-[32%] right-[42%] text-white">
           <CiPlay1 />
         </div>
       </div>
-      <div className="px-7 pb-5">
+      <div className="px-4 pb-5">
         <ul className="mb-5">
           {courseinfo.map((info, index) => (
             <li

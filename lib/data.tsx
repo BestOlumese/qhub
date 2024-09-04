@@ -32,7 +32,7 @@ export const sidebar = [
     link: "/dashboard/reports",
   },
   {
-    name: "My Profile",
+    name: "Profile",
     icon: profile,
     link: "/dashboard/profile",
   },
@@ -179,5 +179,126 @@ export const courseinfo = [
     icon: certificate,
     title: "Certificate",
     content: "Yes",
+  },
+];
+
+export const tests = [
+  {
+    title: "Customer Service Excellence Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: false,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: false,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: false,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: true,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: true,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: true,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: true,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: true,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: true,
+  },
+  {
+    title: "Customer Test",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    isLocked: true,
+  },
+];
+
+export const QUESTIONS = [
+  {
+    title: "Question 1",
+    heading:
+      "What is the correct process for resolving a customer's complaint according to typical bank policies?",
+    options: [
+      "Listen to the customer’s complaint, acknowledge the issue, investigate the problem, provide a solution, and follow up to ensure satisfaction.",
+      "Immediately escalate the complaint to the bank manager without acknowledging the customer’s issue or investigating the problem.",
+      "Apologize to the customer, provide a temporary solution, and wait for the customer to contact the bank again if the issue persists.  ",
+      "Offer the customer a refund or compensation right away without further investigation or follow-up.",
+    ],
+  },
+  {
+    title: "Question 2",
+    heading:
+      "What is th process for resolving a customer's complaint according to typical bank policies?",
+    options: [
+      "Listen to the customer’s complaint, acknowledge the issue, investigate the problem, provide a solution, and follow up to ensure satisfaction.",
+      "Immediat escalate the complaint to the bank manager without acknowledging the customer’s issue or investigating the problem.",
+      "Apologize to the customer, provide a temporary solution, and wait for the customer to contact the bank again if the issue persists.  ",
+      "Offer the customer a refund or compensation right away without further investigation or follow-up.",
+    ],
+  },
+  {
+    title: "Question 3",
+    heading:
+      "What is the correct process for resolving a customer's complaint according to typical bank policies?",
+    options: [
+      "Listen to the customer’s complaint, acknowledge the issue, investigate the problem, provide a solution, and follow up to ensure satisfaction.",
+      "Immescalate the complaint to the bank manager without acknowledging the customer’s issue or investigating the problem.",
+      "Apologize to the customer, provide a temporary solution, and wait for the customer to contact the bank again if the issue persists.  ",
+      "Offer the customer a refund or compensation right away without further investigation or follow-up.",
+    ],
+  },
+  {
+    title: "Question 4",
+    heading:
+      "Whatrect process for resolving a customer's complaint according to typical bank policies?",
+    options: [
+      "Listen ttomer’s complaint, acknowledge the issue, investigate the problem, provide a solution, and follow up to ensure satisfaction.",
+      "Immediately escalate the complaint to the bank manager without acknowledging the customer’s issue or investigating the problem.",
+      "Apologize to the customer, provide a temporary solution, and wait for the customer to contact the bank again if the issue persists.  ",
+      "Offer the customer a refund or compensation right away without further investigation or follow-up.",
+    ],
+  },
+  {
+    title: "Question 5",
+    heading:
+      "Whatr's complaint according to typical bank policies?",
+    options: [
+      "Listen to the customer’s complaint, acknowledge the issue, investigate the problem, provide a solution, and follow up to ensure satisfaction.",
+      "Immediately escalate the complaint to the bank manager without acknowledging the customer’s issue or investigating the problem.",
+      "Apologize to the customer, provide a temporary solution, and wait for the customer to contact the bank again if the issue persists.  ",
+      "Offer the customer a refund or compensation right away without further investigation or follow-up.",
+    ],
   },
 ];

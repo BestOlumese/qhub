@@ -27,7 +27,7 @@ const CourseContentMenu = ({
     },
   ];
   return (
-    <menu className="flex gap-12 border mt-6 border-transparent border-b-black/20 w-full">
+    <menu className="flex gap-5 max-[360px]:text-sm md:gap-12 border mt-3 border-transparent border-b-black/20 w-full">
       {menuItems.map((item, index) => (
         <div className="flex flex-col" key={index}>
           <p

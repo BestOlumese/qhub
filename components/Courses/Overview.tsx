@@ -18,13 +18,13 @@ const Overview = () => {
       className="mt-6"
     >
       <h2 className="font-bold">Course description</h2>
-      <p>
+      <p className="text-sm">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ullam
         impedit nemo nisi necessitatibus laborum explicabo ratione
         exercitationem magnam quis.
       </p>
       <h2 className="font-bold mt-6">What you will learn from this course</h2>
-      <ul>
+      <ul className="text-sm">
         <li>Learn how to build a website</li>
         <li>Learn how to build a website</li>
         <li>Learn how to build a website</li>

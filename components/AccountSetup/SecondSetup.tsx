@@ -3,21 +3,39 @@ import LabelInputContainer from "@/components/ui/Form/LabelInputContainer";
 import { Label } from "@/components/ui/Form/Label";
 import { Input } from "@/components/ui/Form/Input";
 import Image from "next/image";
-import useSecondSetup from "@/hooks/useSecondSetup";
-const SecondSetup = () => {
-  const { logoPreview, fileName, handleLogoChange } = useSecondSetup();
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
+import { UserInputs } from "@/lib/types";
+const SecondSetup = ({
+  userInputs,
+  handleChange,
+  handlePrevious,
+  error,
+  logoPreview,
+  fileName,
+  handleLogoChange,
+}: {
+  handlePrevious: () => void;
+  userInputs: UserInputs;
+  handleChange: (e: any) => void;
 
+  error: string | null;
+  logoPreview: string | null;
+  fileName: string | null;
+  handleLogoChange: (e: any) => void;
+}) => {
   return (
     <>
       <LabelInputContainer className="my-4">
-        <Label htmlFor="employees">No. of Employees</Label>
+        <Label htmlFor="employees">No. of Employees *</Label>
 
         <select
-          name=""
-          id=""
+          name="employeeNo"
+          id="employeeNo"
           className="flex outline-none h-10 w-full border-none bg-gray-50  text-black  shadow-input rounded-md px-3 py-2 text-sm  
           
           "
+          value={userInputs.employeeNo}
+          onChange={(e) => handleChange(e)}
         >
           <option value="">--Select an option--</option>
           <option value="1-10">1-10</option>
@@ -28,16 +46,18 @@ const SecondSetup = () => {
       </LabelInputContainer>
 
       <LabelInputContainer className="my-4">
-        <Label htmlFor="website-url">Website URL</Label>
+        <Label htmlFor="website">Website URL</Label>
         <Input
-          id="website-url"
+          id="website"
           placeholder="https://www.example.com"
           type="text"
+          value={userInputs.website}
+          onChange={handleChange}
         />
       </LabelInputContainer>
 
       <LabelInputContainer className="my-4">
-        <Label>Organization Logo</Label>
+        <Label>Organization Logo *</Label>
         <input
           id="organization-logo"
           type="file"
@@ -49,8 +69,6 @@ const SecondSetup = () => {
           className={`flex  ${
             fileName ? "justify-between " : "justify-end"
           } w-full items-center h-10 border-none bg-gray-50   shadow-input rounded-md p-2 px-3 text-sm   
-            
-      
          `}
         >
           {fileName && (
@@ -76,6 +94,22 @@ const SecondSetup = () => {
           </div>
         )}
       </LabelInputContainer>
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      <div
+        className={`flex text-sm items-center 
+          justify-between
+        `}
+      >
+        <button
+          className="flex items-center gap-2 bg-primary rounded-md text-white p-2 px-6 mt-4"
+          onClick={handlePrevious}
+        >
+          <FaArrowLeft /> Go back
+        </button>
+        <button className="flex items-center gap-2 bg-primary rounded-md text-white  px-4 md:px-6 max-md:text-sm p-2 mt-4">
+          Submit <FaArrowRight />
+        </button>
+      </div>
     </>
   );
 };

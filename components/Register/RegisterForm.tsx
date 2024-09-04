@@ -1,21 +1,30 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { Label } from "../ui/Form/Label";
 import { Input } from "../ui/Form/Input";
 import LabelInputContainer from "../ui/Form/LabelInputContainer";
-import { FaEyeSlash, FaEye } from "react-icons/fa";
 import Password from "./Password";
-const RegisterForm = () => {
+
+type RegisterFormProps = {
+  nameRef: React.RefObject<HTMLInputElement>;
+  emailRef: React.RefObject<HTMLInputElement>;
+  categoryRef: React.RefObject<HTMLSelectElement>;
+  passwordRef: React.RefObject<HTMLInputElement>;
+  confirmPasswordRef: React.RefObject<HTMLInputElement>;
+};
+
+const RegisterForm: React.FC<RegisterFormProps> = ({
+  nameRef,
+  emailRef,
+  categoryRef,
+  passwordRef,
+  confirmPasswordRef,
+}) => {
   return (
-    <form className="mt-10 ">
+    <div className="mt-4 2xl:mt-10 ">
       <LabelInputContainer className="my-4">
         <Label htmlFor="name">Organization Name</Label>
-        <Input
-          id="name"
-          placeholder="Dax Inc"
-          type="text"
-          // value={email}
-          // onChange={handleEmailChange}
-        />
+        <Input id="name" placeholder="Dax Inc" type="text" ref={nameRef} />
       </LabelInputContainer>
       <LabelInputContainer className="mb-4">
         <Label htmlFor="email">Email Address</Label>
@@ -23,29 +32,27 @@ const RegisterForm = () => {
           id="email"
           placeholder="linkvault@dax.com"
           type="email"
-          // value={email}
-          // onChange={handleEmailChange}
+          ref={emailRef}
         />
       </LabelInputContainer>
       <LabelInputContainer className="mb-4">
         <Label htmlFor="category">Category</Label>
         <select
-          name=""
-          id=""
-          className="flex outline-none h-10 w-full border-none bg-gray-50  text-black  shadow-input rounded-md px-3 py-2 text-sm  
-          
-          "
+          id="category"
+          className="flex outline-none h-10 w-full border-none bg-gray-50 text-black shadow-input rounded-md px-3 py-2 text-sm"
+          ref={categoryRef}
         >
           <option value="">--Select an option--</option>
-          <option value="1-10">Technology</option>
-          <option value="1-10">Design</option>
-          <option value="11-50">Finance</option>
-          <option value="51-200">Marketing</option>
-          <option value="201-500">Business</option>
+          <option value="Technology">Technology</option>
+          <option value="Design">Design</option>
+          <option value="Finance">Finance</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Business">Business</option>
         </select>
       </LabelInputContainer>
-      <Password />
-    </form>
+      <Password label="Password" ref={passwordRef} />
+      <Password label="Confirm Password" ref={confirmPasswordRef} />
+    </div>
   );
 };
 

@@ -3,8 +3,8 @@ import Star from "@/components/ui/Star";
 import ProgressBar from "@/components/ui/ProgressBar";
 const CustomerRating = () => {
   return (
-    <div className="col-span-9">
-      <h1 className="font-bold text-xl">Average customer ratings</h1>
+    <div className="w-full p-4 md:col-span-9">
+      <h1 className="font-bold text-xl max-md:hidden">Average customer ratings</h1>
 
       <div className="mt-6 flex flex-col gap-3">
         <div className="flex gap-8 items-center justify-center">

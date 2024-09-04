@@ -5,7 +5,7 @@ import { FaAngleDown } from "react-icons/fa";
 const CustomerReviews = () => {
   return (
     <div className="mt-12 ">
-      <div className="grid-cols-2 grid  gap-8">
+      <div className="grid-cols-2 grid  gap-3 md:gap-8">
         {reviews.map((review, index) => (
           <div key={index} className="p-4 border rounded-md border-slate-300">
             <div className="w-fit mb-3">
