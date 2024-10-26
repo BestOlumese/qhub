@@ -1,7 +1,6 @@
 import HomepageStats from "./HomePageStats";
 import Course from "@/components/ui/Course";
 import React from "react";
-import { FaPlus } from "react-icons/fa6";
 import TopViewedCourse from "../TopViewedCourse";
 import MostActiveEmployees from "../MostActiveEmployees";
 
