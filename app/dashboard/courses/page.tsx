@@ -1,15 +1,14 @@
-"use client";
-import AllCourses from "@/components/Courses/AllCourses";
-import Menu from "@/components/Courses/Menu";
-import React, { useState } from "react";
-
+import AdminCoursesPage from "@/components/AdminCoursesPage";
+import EmployeeCoursesPage from "@/components/EmployeeCoursesPage";
 const Courses = () => {
-  const [showEnrolled, setShowEnrolled] = useState(false);
+  const user = {
+    role: "admin",
+  };
+  const role = user.role;
   return (
-    <div className="p-6 h-full">
-      <Menu showEnrolled={showEnrolled} setShowEnrolled={setShowEnrolled} />
-
-      <AllCourses showEnrolled={showEnrolled} />
+    <div className="w-full h-full p-6">
+      {role === "admin" && <AdminCoursesPage />}
+      {role === "employee" && <EmployeeCoursesPage />}
     </div>
   );
 };

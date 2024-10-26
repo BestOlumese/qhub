@@ -7,25 +7,26 @@ import { TbLogout2 } from "react-icons/tb";
 
 const Sidebar = () => {
   return (
-    <aside className=" max-md:hidden overflow-hidden bg-primary-light/50 py-6 text-black h-screen justify-between flex flex-col ">
+    <aside className=" max-md:hidden overflow-hidden w-[250px] bg-primary-light/50 py-6 text-black h-screen justify-between flex flex-col ">
       <div>
-        <div className="flex  w-full justify-center items-center ">
+        <div className=" px-6">
           <Image
             src={logo}
             alt="logo"
             priority
             className="max-lg:w-20 cursor-pointer"
           />
-          
         </div>
         <SidebarContent />
       </div>
-      <div className="px-10">
-        <Link href="/login" className="flex gap-2 items-center text-red-500">
-          <TbLogout2 />
-          Logout
-        </Link>
-      </div>
+
+      <Link
+        href="/login"
+        className="flex px-6 hover:bg-lightBlue p-2 gap-2 items-center text-red-500"
+      >
+        <TbLogout2 />
+        Logout
+      </Link>
     </aside>
   );
 };

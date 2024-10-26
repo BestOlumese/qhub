@@ -6,7 +6,7 @@ const Tests = () => {
   return (
     <div className="p-6 ">
       <div className="max-md:flex justify-between items-center">
-        <h1 className="font-bold text-3xl">Tests</h1>
+        <h1 className="font-bold text-xl max-md:text-lg">Tests</h1>
         <div className="w-full flex justify-end">
           <div className="relative border border-black/30  rounded-full  md:mx-8 flex items-center pl-3 gap-1 w-fit border-gray-200 ">
             <Image

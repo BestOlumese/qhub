@@ -3,7 +3,7 @@ import woman from "@/public/womanspeaking.png";
 import { CiPlay1 } from "react-icons/ci";
 import { courseinfo } from "@/lib/data";
 import Image from "next/image";
-import Button from "../ui/Button";
+import Button from "../Button";
 const SecondGrid = () => {
   return (
     <div className="bg-primary-light col-span-3 text-sm h-fit sticky top-0 max-xl:hidden">

@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/plus-jakarta-display.min.css");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,7 +10,17 @@
   font-optical-sizing: auto;
   font-variation-settings: "YOPQ" 300;
 }
-
+.font-plus {
+  font-family: "Plus Jakarta Display", sans-serif;
+  font-optical-sizing: auto;
+}
+.hidden-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 .open-sans {
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
@@ -128,4 +139,10 @@
   background-color: rgb(249 250 251 / var(--tw-bg-opacity));
   /* border: 1px solid #ccc;
   border-radius: 5px; */
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }

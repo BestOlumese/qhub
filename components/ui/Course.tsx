@@ -1,7 +1,7 @@
 import React from "react";
 import image from "@/public/courseimage.png";
 import Image from "next/image";
-import Button from "../ui/Button";
+import Button from "../Button";
 import ProgressBar from "../ui/ProgressBar";
 import Link from "next/link";
 const Course = ({ enrolled }: { enrolled: boolean }) => {
@@ -33,7 +33,7 @@ const Course = ({ enrolled }: { enrolled: boolean }) => {
           </div>
         ) : (
           <div>
-            <p className="max-lg:text-sm"> 
+            <p className="max-lg:text-sm">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Molestias, consectetur.
             </p>

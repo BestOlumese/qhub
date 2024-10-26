@@ -1,5 +1,5 @@
 "use client";
-import Button from "@/components/ui/Button";
+import Button from "@/components/Button";
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 
@@ -16,7 +16,7 @@ const Verified = () => {
       <p className="max-w-[280px] mx-auto sm:max-w-xs my-4 text-center max-sm:text-sm">
         Your email has been verified. Let&apos;s get your account set up.
       </p>
-      <Button text="Get Started" clickFunction={handleStart } />
+      <Button text="Get Started" clickFunction={handleStart} />
     </div>
   );
 };

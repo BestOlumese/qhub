@@ -4,37 +4,161 @@ import test from "@/assets/icons/test.svg";
 import file from "@/assets/icons/file.svg";
 import chart from "@/assets/icons/chart.svg";
 import profile from "@/assets/icons/profile.svg";
-import { title } from "process";
-export const sidebar = [
+import {
+  IconBook,
+  IconBriefcase2,
+  IconChartPie,
+  IconChecks,
+  IconLayout2,
+  IconPuzzle,
+  IconUsers,
+} from "@tabler/icons-react";
+import { GoMortarBoard } from "react-icons/go";
+export const sidebar = {
+  employee: [
+    {
+      name: "Dashboard",
+      icon: grid,
+      link: "/dashboard",
+    },
+    {
+      name: "Courses",
+      icon: gradcap,
+      link: "/dashboard/courses",
+    },
+    {
+      name: "Tests",
+      icon: test,
+      link: "/dashboard/tests",
+    },
+    {
+      name: "Resources",
+      icon: file,
+      link: "/dashboard/resources",
+    },
+    {
+      name: "Reports",
+      icon: chart,
+      link: "/dashboard/reports",
+    },
+    {
+      name: "Profile",
+      icon: profile,
+      link: "/dashboard/profile",
+    },
+  ],
+  admin: [
+    {
+      name: "Dashboard",
+      icon: <IconLayout2 />,
+      link: "/dashboard",
+    },
+    {
+      name: "Employees",
+      icon: <IconBriefcase2 />,
+      link: "/dashboard/employees",
+    },
+    {
+      name: "Courses",
+      icon: <GoMortarBoard className="font-[1000] text-2xl" />,
+      link: "/dashboard/courses",
+    },
+    {
+      name: "Tests",
+      icon: <IconPuzzle />,
+      link: "/dashboard/tests",
+    },
+    {
+      name: "Reports",
+      icon: <IconChartPie />,
+      link: "/dashboard/reports",
+    },
+  ],
+};
+export const employees = [
   {
-    name: "Home",
-    icon: grid,
-    link: "/dashboard",
+    id: "1",
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    role: "admin",
+    status: "active",
   },
   {
-    name: "Courses",
-    icon: gradcap,
-    link: "/dashboard/courses",
+    id: "2",
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "inactive",
   },
   {
-    name: "Tests",
-    icon: test,
-    link: "/dashboard/tests",
+    id: "3",
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "active",
   },
   {
-    name: "Resources",
-    icon: file,
-    link: "/dashboard/resources",
+    id: "4",
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "inactive",
   },
   {
-    name: "Reports",
-    icon: chart,
-    link: "/dashboard/reports",
+    id: "5",
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "active",
   },
   {
-    name: "Profile",
-    icon: profile,
-    link: "/dashboard/profile",
+    id: "6",
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "inactive",
+  },
+  {
+    id: "7",
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "active",
+  },
+  {
+    id: "8",
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "inactive",
+  },
+  {
+    id: "9",
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "active",
+  },
+  {
+    id: "10",
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "inactive",
+  },
+  {
+    id: "11",
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "inactive",
+  },
+  {
+    id: "12",
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    role: "employee",
+    status: "inactive",
   },
 ];
 
@@ -292,13 +416,156 @@ export const QUESTIONS = [
   },
   {
     title: "Question 5",
-    heading:
-      "Whatr's complaint according to typical bank policies?",
+    heading: "Whatr's complaint according to typical bank policies?",
     options: [
       "Listen to the customer’s complaint, acknowledge the issue, investigate the problem, provide a solution, and follow up to ensure satisfaction.",
       "Immediately escalate the complaint to the bank manager without acknowledging the customer’s issue or investigating the problem.",
       "Apologize to the customer, provide a temporary solution, and wait for the customer to contact the bank again if the issue persists.  ",
       "Offer the customer a refund or compensation right away without further investigation or follow-up.",
     ],
+  },
+];
+import resource1 from "@/public/resource1.png";
+import resource2 from "@/public/resource2.png";
+import resource3 from "@/public/resource3.png";
+import resource4 from "@/public/resource4.png";
+import resource5 from "@/public/resource5.png";
+import resource6 from "@/public/resource6.png";
+import resource7 from "@/public/resource7.png";
+export const resources = [
+  {
+    name: "Resource 1",
+    image: resource1,
+    type: "PDF",
+  },
+  {
+    name: "Resource 2",
+    image: resource2,
+    type: "PDF",
+  },
+  {
+    name: "Resource 3",
+    image: resource3,
+    type: "Excel",
+  },
+  {
+    name: "Resource 4",
+    image: resource4,
+    type: "PDF",
+  },
+  {
+    name: "Resource 5",
+    image: resource5,
+    type: "Checklist",
+  },
+  {
+    name: "Resource 6",
+    image: resource6,
+    type: "PDF",
+  },
+  {
+    name: "Resource 7",
+    image: resource7,
+    type: "Excel",
+  },
+];
+
+// export const homepageStats = [
+//   {
+//     sub: "Month active employees",
+//     value: "50+",
+//     percent: "+10%",
+//     icon: education,
+//   },
+//   {
+//     sub: "Month completed courses",
+//     value: "30",
+//     percent: "+15%",
+//     icon: doublecheck,
+//   },
+//   {
+//     sub: "Average assessment score",
+//     value: "70%",
+//     percent: "-3%",
+//     icon: education,
+//   },
+//   {
+//     sub: "Month learning time",
+//     value: "24hrs",
+//     percent: "+5%",
+//     icon: clock,
+//   },
+// ];
+export const homepageStats = [
+  {
+    sub: "Number of Courses",
+    value: "30",
+    icon: <IconBook className="text-primary w-5 h-5" />,
+  },
+  {
+    sub: "Number of Employees",
+    value: "500",
+
+    icon: <IconUsers className="text-primary w-5 h-5" />,
+  },
+  {
+    sub: "Number of Completed Courses",
+    value: "500",
+    icon: <IconChecks className="text-primary w-5 h-5" />,
+  },
+];
+export const topratedCourses = [
+  {
+    course: "Introduction to JavaScript",
+    ratings: 5.0,
+  },
+  {
+    course: "Introduction to JavaScript",
+    ratings: 4.5,
+  },
+  {
+    course: "Introduction to JavaScript",
+    ratings: 4.2,
+  },
+  {
+    course: "JavaScript for Beginners",
+    ratings: 3.8,
+  },
+  {
+    course: "Learn JavaScript",
+    ratings: 3.5,
+  },
+];
+import avatar from "@/public/avatar.svg";
+export const mostActiveEmployees = [
+  {
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    picture: avatar,
+    coursesTaken: 5,
+  },
+  {
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    picture: avatar,
+    coursesTaken: 4,
+  },
+  {
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    picture: avatar,
+    coursesTaken: 3,
+  },
+  {
+    name: "Jane Doe",
+    email: "taiwo@gmail.com",
+    picture: "",
+    coursesTaken: 2,
+  },
+  {
+    name: "John Doe",
+    email: "taiwo@gmail.com",
+    picture: "",
+    coursesTaken: 1,
   },
 ];
