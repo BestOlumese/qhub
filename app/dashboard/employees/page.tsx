@@ -2,14 +2,13 @@ import EmployeeTable from "@/components/Admin/EmployeeTable";
 
 import { notFound } from "next/navigation";
 
-
 import React from "react";
 
 import InviteEmployeeSheet from "@/components/Admin/InviteEmployeeSheet";
 
 const Page = () => {
   const user = {
-    role: "employee",
+    role: "admin",
   };
   const role = user.role;
   if (role !== "admin") return notFound();

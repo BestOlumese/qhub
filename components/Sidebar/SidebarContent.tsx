@@ -9,7 +9,7 @@ const SidebarContent = () => {
   const pathname = usePathname();
 
   const user: { role: Role } = {
-    role: "employee",
+    role: "admin",
   };
 
   const role = user.role;
