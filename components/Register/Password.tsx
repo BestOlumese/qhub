@@ -9,7 +9,7 @@ type PasswordProps = {
 };
 
 const Password = forwardRef<HTMLInputElement, PasswordProps>(({ label }, ref) => {
-  console.log(ref);
+
   Password.displayName = "Password";
   const [showPassword, setShowPassword] = useState(false);
   return (
