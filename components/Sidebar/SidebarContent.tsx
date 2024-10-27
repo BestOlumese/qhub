@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { sidebar } from "@/lib/data";
+import { employeeSidebar, adminSidebar } from "@/lib/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -9,12 +9,11 @@ const SidebarContent = () => {
   const pathname = usePathname();
 
   const user: { role: Role } = {
-    role: "admin",
+    role: "employee",
   };
 
   const role = user.role;
-  const activeSidebar = sidebar[role];
-  console.log(pathname, "pathname");
+  const activeSidebar = role === "admin" ? adminSidebar : employeeSidebar;
 
   return (
     <ul className="mt-6 flex flex-col gap-3">

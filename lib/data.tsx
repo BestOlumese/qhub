@@ -9,78 +9,78 @@ import {
   IconBriefcase2,
   IconChartPie,
   IconChecks,
+  IconFile,
   IconLayout2,
   IconPuzzle,
+  IconUser,
   IconUsers,
 } from "@tabler/icons-react";
 import { GoMortarBoard } from "react-icons/go";
-export const sidebar = {
-  employee: [
-    {
-      name: "Dashboard",
-      icon: grid,
-      link: "/dashboard",
-    },
-    {
-      name: "Courses",
-      icon: gradcap,
-      link: "/dashboard/courses",
-    },
-    {
-      name: "Tests",
-      icon: test,
-      link: "/dashboard/tests",
-    },
-    {
-      name: "Resources",
-      icon: file,
-      link: "/dashboard/resources",
-    },
-    {
-      name: "Reports",
-      icon: chart,
-      link: "/dashboard/reports",
-    },
-    {
-      name: "Profile",
-      icon: profile,
-      link: "/dashboard/profile",
-    },
-  ],
-  admin: [
-    {
-      name: "Dashboard",
-      icon: <IconLayout2 />,
-      link: "/dashboard",
-    },
-    {
-      name: "Employees",
-      icon: <IconBriefcase2 />,
-      link: "/dashboard/employees",
-    },
-    {
-      name: "Courses",
-      icon: <GoMortarBoard className="font-[1000] text-2xl" />,
-      link: "/dashboard/courses",
-    },
-    {
-      name: "Tests",
-      icon: <IconPuzzle />,
-      link: "/dashboard/tests",
-    },
-    {
-      name: "Reports",
-      icon: <IconChartPie />,
-      link: "/dashboard/reports",
-    },
-  ],
-};
+export const employeeSidebar = [
+  {
+    name: "Dashboard",
+    icon: <IconLayout2 />,
+    link: "/dashboard",
+  },
+  {
+    name: "Courses",
+    icon: <GoMortarBoard className="font-[1000] text-2xl" />,
+    link: "/dashboard/courses",
+  },
+  {
+    name: "Tests",
+    icon: <IconPuzzle />,
+    link: "/dashboard/tests",
+  },
+  {
+    name: "Resources",
+    icon: <IconFile />,
+    link: "/dashboard/resources",
+  },
+  {
+    name: "Reports",
+    icon: <IconChartPie />,
+    link: "/dashboard/reports",
+  },
+  {
+    name: "Profile",
+    icon: <IconUser />,
+    link: "/dashboard/profile",
+  },
+];
+export const adminSidebar = [
+  {
+    name: "Dashboard",
+    icon: <IconLayout2 />,
+    link: "/dashboard",
+  },
+  {
+    name: "Employees",
+    icon: <IconBriefcase2 />,
+    link: "/dashboard/employees",
+  },
+  {
+    name: "Courses",
+    icon: <GoMortarBoard className="font-[1000] text-2xl" />,
+    link: "/dashboard/courses",
+  },
+  {
+    name: "Tests",
+    icon: <IconPuzzle />,
+    link: "/dashboard/tests",
+  },
+  {
+    name: "Reports",
+    icon: <IconChartPie />,
+    link: "/dashboard/reports",
+  },
+];
 export const employees = [
   {
     id: "1",
     name: "John Doe",
     email: "taiwo@gmail.com",
-    role: "admin",
+    role: "employee",
     status: "active",
   },
   {
