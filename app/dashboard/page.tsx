@@ -3,7 +3,7 @@ import React from "react";
 import EmployeeHome from "@/components/Employee/EmployeeHome";
 const Page = () => {
   const user = {
-    role: "admin",
+    role: "employee",
   };
   const role = user.role;
   return (
