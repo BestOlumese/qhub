@@ -1,5 +1,4 @@
-import HomepageStats from "./HomePageStats";
-
+import HomepageStats from "./HomepageStats";
 import React from "react";
 import TopViewedCourse from "../TopViewedCourse";
 import MostActiveEmployees from "../MostActiveEmployees";
