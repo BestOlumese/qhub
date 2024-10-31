@@ -2,9 +2,9 @@
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Employee } from "@/lib/types";
-import { DataTable } from "../ui/data-table";
-import { employees } from "@/lib/data";
-import { Button } from "../ui/button";
+import { DataTable } from "./DataTable";
+import { employees } from "@/lib/adminData";
+import { Button } from "../../ui/button";
 
 import {
   DropdownMenu,
@@ -116,10 +116,16 @@ const EmployeeTable = () => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>Change role</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => alert("Delete user")} className="hover:!text-red-500">
+                <DropdownMenuItem
+                  onClick={() => alert("Delete user")}
+                  className="hover:!text-red-500"
+                >
                   Deactivate
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => alert("Delete user")} className="hover:!text-red-500">
+                <DropdownMenuItem
+                  onClick={() => alert("Delete user")}
+                  className="hover:!text-red-500"
+                >
                   Delete
                 </DropdownMenuItem>
               </DropdownMenuContent>

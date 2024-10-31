@@ -2,7 +2,7 @@ import AdminCoursesPage from "@/components/AdminCoursesPage";
 import EmployeeCoursesPage from "@/components/EmployeeCoursesPage";
 const Courses = () => {
   const user = {
-    role: "employee",
+    role: "admin",
   };
   const role = user.role;
   return (

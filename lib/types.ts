@@ -56,3 +56,13 @@ export interface AppContextType {
   modules: Module[];
   setModules: React.Dispatch<React.SetStateAction<Module[]>>;
 }
+
+export interface Course {
+  id: string;
+  name: string;
+  category: string;
+  duration: string;
+  students: string;
+  startDate: string;
+  endDate: string;
+}

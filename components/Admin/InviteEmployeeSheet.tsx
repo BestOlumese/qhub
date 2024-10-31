@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { IconCirclePlus } from "@tabler/icons-react";
+import { IconCirclePlus, IconUser, IconUserPlus } from "@tabler/icons-react";
 
 import InviteEmployeeForm from "@/components/Admin/InviteEmployeeForm";
 import BulkInviteEmployee from "./BulkInviteEmployee";
+import { Button } from "../ui/button";
 const InviteEmployeeSheet = () => {
   const [isBulk, setIsBulk] = useState(false);
   const handleBulkUpload = () => {
@@ -16,12 +17,12 @@ const InviteEmployeeSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="bg-primary text-white px-4 p-2 rounded-md ">
-          <IconCirclePlus className="inline mr-2 w-5 h-5" />
-          Invite New Employee
-        </button>
+        <Button className="bg-primary w-fit max-md:mt-2 text-white hover:bg-primary/90">
+          <IconUserPlus className="inline mr-2 w-5 h-5" />
+          Invite Employee
+        </Button>
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="px-0 py-4">
         {isBulk ? (
           <BulkInviteEmployee onBack={handleGoBack} />
         ) : (

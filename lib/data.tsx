@@ -16,39 +16,7 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import { GoMortarBoard } from "react-icons/go";
-export const employeeSidebar = [
-  {
-    name: "Dashboard",
-    icon: <IconLayout2 />,
-    link: "/dashboard",
-  },
-  {
-    name: "Courses",
-    icon: <GoMortarBoard className="font-[1000] text-2xl" />,
-    link: "/dashboard/courses",
-  },
-  {
-    name: "Tests",
-    icon: <IconPuzzle />,
-    link: "/dashboard/tests",
-  },
-  {
-    name: "Resources",
-    icon: <IconFile />,
-    link: "/dashboard/resources",
-  },
-  {
-    name: "Reports",
-    icon: <IconChartPie />,
-    link: "/dashboard/reports",
-  },
-  {
-    name: "Profile",
-    icon: <IconUser />,
-    link: "/dashboard/profile",
-  },
-];
-export const adminSidebar = [
+export const sidebar = [
   {
     name: "Dashboard",
     icon: <IconLayout2 />,
@@ -64,102 +32,26 @@ export const adminSidebar = [
     icon: <GoMortarBoard className="font-[1000] text-2xl" />,
     link: "/dashboard/courses",
   },
+  // {
+  //   name: "Tests",
+  //   icon: <IconPuzzle />,
+  //   link: "/dashboard/tests",
+  // },
   {
-    name: "Tests",
-    icon: <IconPuzzle />,
-    link: "/dashboard/tests",
+    name: "Resources",
+    icon: <IconFile />,
+    link: "/dashboard/resources",
   },
   {
     name: "Reports",
     icon: <IconChartPie />,
     link: "/dashboard/reports",
   },
-];
-export const employees = [
-  {
-    id: "1",
-    name: "John Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "active",
-  },
-  {
-    id: "2",
-    name: "Jane Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "inactive",
-  },
-  {
-    id: "3",
-    name: "John Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "active",
-  },
-  {
-    id: "4",
-    name: "Jane Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "inactive",
-  },
-  {
-    id: "5",
-    name: "John Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "active",
-  },
-  {
-    id: "6",
-    name: "Jane Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "inactive",
-  },
-  {
-    id: "7",
-    name: "John Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "active",
-  },
-  {
-    id: "8",
-    name: "Jane Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "inactive",
-  },
-  {
-    id: "9",
-    name: "John Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "active",
-  },
-  {
-    id: "10",
-    name: "Jane Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "inactive",
-  },
-  {
-    id: "11",
-    name: "Jane Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "inactive",
-  },
-  {
-    id: "12",
-    name: "Jane Doe",
-    email: "taiwo@gmail.com",
-    role: "employee",
-    status: "inactive",
-  },
+  // {
+  //   name: "Profile",
+  //   icon: <IconUser />,
+  //   link: "/dashboard/profile",
+  // },
 ];
 
 export const modules = [
@@ -498,18 +390,23 @@ export const resources = [
 // ];
 export const homepageStats = [
   {
-    sub: "Number of Courses",
+    sub: "No of Courses",
     value: "30",
     icon: <IconBook className="text-primary w-5 h-5" />,
   },
   {
-    sub: "Number of Employees",
+    sub: "No of Employees",
     value: "500",
 
     icon: <IconUsers className="text-primary w-5 h-5" />,
   },
   {
-    sub: "Number of Completed Courses",
+    sub: "No of Completed Courses",
+    value: "500",
+    icon: <IconChecks className="text-primary w-5 h-5" />,
+  },
+  {
+    sub: "No of Completed Courses",
     value: "500",
     icon: <IconChecks className="text-primary w-5 h-5" />,
   },

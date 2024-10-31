@@ -1,14 +1,14 @@
 import React from "react";
 import image from "@/public/courseimage.png";
 import Image from "next/image";
-import Button from "../Button";
-import ProgressBar from "../ui/ProgressBar";
+import ProgressBar from "./ui/ProgressBar";
 import Link from "next/link";
+import { Button } from "./ui/button";
 const Course = ({ enrolled }: { enrolled: boolean }) => {
   return (
     <Link
       href={`/dashboard/courses/introduction-to-data-science`}
-      className="w-[250px] lg:w-[320px] bg-primary-light cursor-pointer  py-4 flex gap-2 flex-col rounded-md"
+      className=" bg-primary-light cursor-pointer  py-4 flex gap-2 flex-col rounded-md"
     >
       <div className="px-4 w-full mb-4">
         <Image src={image} alt="course image" />
@@ -27,9 +27,7 @@ const Course = ({ enrolled }: { enrolled: boolean }) => {
                 45% <span className="max-lg:hidden">completed</span>
               </p>
             </div>
-            <div className="mt-4">
-              <Button text="Continue" />
-            </div>
+            <Button className="mt-4 bg-primary w-full">Continue</Button>
           </div>
         ) : (
           <div>

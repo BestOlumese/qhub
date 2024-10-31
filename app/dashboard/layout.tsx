@@ -7,12 +7,14 @@ const Dashboard: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   return (
-    <div className="   h-screen flex overflow-hidden ">
+    <div className="flex  max-h-screen overflow-hidden">
+      <div className="max-md:hidden">
       <Sidebar />
-      <div className="max-md:w-full w-[calc(100%-250px)] overflow-y-auto h-full flex flex-col ">
+      </div>
+      <div className="flex-1 max-h-screen overflow-y-auto h-full ">
         <Header />
         {children}
-        <Bottombar />
+        {/* <Bottombar /> */}
       </div>
     </div>
   );

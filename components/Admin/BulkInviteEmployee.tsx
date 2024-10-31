@@ -21,13 +21,15 @@ const BulkInviteEmployee = ({ onBack }: { onBack: () => void }) => {
   return (
     <>
       <SheetHeader>
-        <SheetTitle>Bulk Invite New Employee</SheetTitle>
-        <SheetDescription>
+        <SheetTitle className="border-b-2 px-6 pb-4">
+          Bulk Invite New Employee
+        </SheetTitle>
+        <SheetDescription className="px-6">
           Upload a csv file with the following columns:
         </SheetDescription>
       </SheetHeader>
 
-      <div className="mt-4">
+      <div className="mt-4 px-6">
         <ul className="w-full mt-4 text-sm flex flex-col gap-1.5 list-disc list-inside">
           {employeeColumns.map((column, index) => (
             <li key={index} className="text-sm font-medium">

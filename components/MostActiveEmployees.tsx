@@ -19,8 +19,7 @@ const MostActiveEmployees = () => {
           Most Active Employees
         </CardTitle>
         <CardDescription className="text-sm">
-          View the most active employees based on the number of courses they
-          have taken
+          Employees with the most courses taken
         </CardDescription>
       </CardHeader>
 

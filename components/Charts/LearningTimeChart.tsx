@@ -23,7 +23,7 @@ const chartConfig = {
     label: "Page Views",
   },
   hours: {
-    label: "Hours", 
+    label: "Hours",
   },
 } satisfies ChartConfig;
 const chartData = [
@@ -119,27 +119,21 @@ const chartData = [
   { date: "2024-06-29", hours: 103, mobile: 160 },
   { date: "2024-06-30", hours: 446, mobile: 400 },
 ];
-import {
-  IconBook,
-  IconCertificate,
-  IconChecks,
-  IconClock,
-  IconUsers,
-} from "@tabler/icons-react";
+import { IconBook } from "@tabler/icons-react";
 export default function LearningTimeChart() {
   return (
-    <Card className="rounded-3xl border-none mt-6 bg-white border border-gray-300  shadow-md">
-      <CardHeader>
+    <Card className="rounded-3xl flex flex-col ">
+      <CardHeader className="max-md:items-center flex justify-center">
         <CardTitle className="text-sm font-medium flex items-center text-slate-600 font-plus">
           <IconBook className="h-4 w-4  text-muted-foreground inline mr-2" />
           Learning Hours
         </CardTitle>
 
-        <CardDescription className="text-2xl mt-2 text-black flex flex-col font-bold">
+        <CardDescription className="text-2xl max-md:text-center mt-2 text-black flex flex-col font-bold">
           <>
             50hrs
-            <span className={`text-xs text-slate-400 mt-1`}>
-              {25}% from yesterday
+            <span className={`text-xs text-slate-500 mt-1`}>
+              +{25}% from yesterday
             </span>
           </>
         </CardDescription>
@@ -160,11 +154,11 @@ export default function LearningTimeChart() {
           >
             <CartesianGrid
               vertical={false}
-              stroke="#94a3b8"
+              stroke="#64748b"
               strokeOpacity={0.2}
             />
             <XAxis
-              tick={{ fill: "#94a3b8" }}
+              tick={{ fill: "#64748b" }}
               dataKey="date"
               tickLine={false}
               axisLine={false}
@@ -185,7 +179,7 @@ export default function LearningTimeChart() {
                       "linear-gradient(127deg, rgba(6, 11, 40, 0.74) 28.26%, rgba(10, 14, 35, 0.71) 91.2%)",
                   }}
                   className="w-[150px]"
-                  nameKey="learned"
+                  nameKey="hours"
                   labelFormatter={(value) => {
                     return new Date(value).toLocaleDateString("en-US", {
                       month: "short",

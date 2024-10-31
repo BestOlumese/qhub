@@ -21,13 +21,15 @@ const InviteEmployeeForm = ({ onBulkUpload }: { onBulkUpload: () => void }) => {
   return (
     <>
       <SheetHeader>
-        <SheetTitle>Invite New Employee</SheetTitle>
-        <SheetDescription>
+        <SheetTitle className="border-b-2 px-6 pb-4">
+          Invite Employee
+        </SheetTitle>
+        <SheetDescription className="px-6">
           Invite new employees to your organization.
         </SheetDescription>
       </SheetHeader>
 
-      <div className="mt-4">
+      <div className="mt-4 px-6">
         <form className="flex flex-col gap-4">
           <div className="w-full grid grid-cols-2 gap-2">
             <div className="flex flex-col gap-2">

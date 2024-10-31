@@ -9,7 +9,7 @@ const steps = [
     label: "Course Information",
   },
   {
-    label: "Module & Quiz Creation",
+    label: "Module Creation",
   },
 ];
 const CourseBuilder = () => {
@@ -27,7 +27,7 @@ const CourseBuilder = () => {
           <div
             key={index}
             onClick={() => handleStepClick(index + 1)}
-            className={`flex items-center gap-2 text-sm cursor-pointer ${
+            className={`flex items-center gap-2 text-sm max-md:text-xs cursor-pointer ${
               index + 1 < currentStep ? "text-primary" : "text-gray-500"
             }`}
           >

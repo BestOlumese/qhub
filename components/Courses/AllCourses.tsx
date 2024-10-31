@@ -1,5 +1,5 @@
 import React from "react";
-import Course from "../ui/Course";
+import Course from "../Course";
 
 const AllCourses = ({ showEnrolled }: { showEnrolled: boolean }) => {
   return (

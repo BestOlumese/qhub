@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { employeeSidebar, adminSidebar } from "@/lib/data";
+import { sidebar } from "@/lib/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -9,33 +9,35 @@ const SidebarContent = () => {
   const pathname = usePathname();
 
   const user: { role: Role } = {
-    role: "employee",
+    role: "admin",
   };
 
   const role = user.role;
-  const activeSidebar = role === "admin" ? adminSidebar : employeeSidebar;
+  const isAdmin = role === "admin";
 
   return (
-    <ul className="mt-6 flex flex-col gap-3">
-      {activeSidebar.map((item, index) => {
-        const isActive =
-          item.link === "/dashboard"
-            ? pathname === "/dashboard"
-            : pathname.startsWith(item.link);
+    <ul className="mt-6 flex flex-col gap-2.5">
+      {sidebar
+        .filter((item) => item.name !== "Employees" || isAdmin)
+        .map((item, index) => {
+          const isActive =
+            item.link === "/dashboard"
+              ? pathname === "/dashboard"
+              : pathname.startsWith(item.link);
 
-        return (
-          <Link href={item.link} className="w-full" key={index}>
-            <li
-              className={`flex items-center max-lg:justify-center hover:bg-lightBlue px-6 gap-4 font-semibold text-base p-2 border-4 border-transparent ${
+          return (
+            <Link
+              href={item.link}
+              className={`flex items-center max-md:text-sm max-md:px-2 px-6 hover:bg-lightBlue gap-4 p-2 border-4 border-transparent ${
                 isActive ? "bg-lightBlue border-l-primary" : ""
               }`}
+              key={index}
             >
               {item.icon}
-              <span className="max-lg:hidden visible">{item.name}</span>
-            </li>
-          </Link>
-        );
-      })}
+              {item.name}
+            </Link>
+          );
+        })}
     </ul>
   );
 };

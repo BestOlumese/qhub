@@ -77,18 +77,26 @@ const Page1QuizQuestion = ({
             />
           </SelectTrigger>
           <SelectContent className="grid grid-cols-2 gap-2">
-            {questionTypes.map((questionType, index) => (
-              <SelectItem value={questionType.value} key={index} hideTick>
-                <div className="flex items-center gap-2">
-                  <div
-                    className={`w-10 h-10 rounded-md flex items-center justify-center ${questionType.color} text-white`}
-                  >
-                    {questionType.icon}
+            {questionTypes.map((questionType, index) => {
+              let backgroundColor = "bg-primary";
+              if (questionType.value === "short-answer") {
+                backgroundColor = "bg-orange-500";
+              } else if (questionType.value === "multiple-choice") {
+                backgroundColor = "bg-purple-500";
+              }
+              return (
+                <SelectItem value={questionType.value} key={index} hideTick>
+                  <div className="flex items-center gap-2">
+                    <div
+                      className={`w-10 h-10 rounded-md flex items-center justify-center ${backgroundColor} text-white`}
+                    >
+                      {questionType.icon}
+                    </div>
+                    <p>{questionType.type}</p>
                   </div>
-                  <p>{questionType.type}</p>
-                </div>
-              </SelectItem>
-            ))}
+                </SelectItem>
+              );
+            })}
           </SelectContent>
         </Select>
       </div>

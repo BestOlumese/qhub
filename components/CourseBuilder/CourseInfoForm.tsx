@@ -26,8 +26,8 @@ const CourseInfoForm = () => {
           rows={10}
         />
       </div>
-      <div className="flex w-full mt-4 ">
-        <div className="grid gap-4 w-[50%]">
+      <div className="flex max-md:flex-col w-full mt-4 ">
+        <div className="grid gap-4 max-md:w-full w-[50%]">
           <p className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             Estimated Course Duration
           </p>
@@ -53,7 +53,7 @@ const CourseInfoForm = () => {
             </div>
           </div>
         </div>
-        <div className="grid gap-4 w-[50%]">
+        <div className="grid gap-4 w-[50%]  max-md:w-full max-md:mt-4">
           <Label htmlFor="category">Category</Label>
           <Select>
             <SelectTrigger className="w-[180px]">

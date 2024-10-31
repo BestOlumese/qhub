@@ -1,9 +1,9 @@
 import AdminHome from "@/components/Admin/AdminHome";
 import React from "react";
-import EmployeeHome from "@/components/Employee/EmployeeHome";
+import EmployeeHome from "@/components/EmployeeHome";
 const Page = () => {
   const user = {
-    role: "employee",
+    role: "admin",
   };
   const role = user.role;
   return (

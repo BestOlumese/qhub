@@ -119,13 +119,8 @@ const ModuleBuilder = () => {
               onChange={handleChange}
               value={newModule.name}
             />
-            <p className=" flex items-center gap-2 text-gray-500 text-sm">
-              <IconInfoCircle className="w-5 h-5" />
-              Module titles are displayed publicly wherever required. Each
-              module may contain one or more lessons, quiz and tasks.
-            </p>
           </div>
-          <div className="grid gap-4 mt-4">
+          <div className="grid gap-4">
             <Label htmlFor="summary">Module Summary</Label>
             <Textarea
               placeholder="Type summary here."
@@ -134,12 +129,6 @@ const ModuleBuilder = () => {
               onChange={handleChange}
               value={newModule.summary}
             />
-            <p className=" flex items-center gap-2 text-gray-500 text-sm">
-              <IconInfoCircle className="w-5 h-5" />
-              Add a summary of short text to prepare students for the activities
-              for the topic. The text is shown on the course page beside the
-              tooltip beside the module name.
-            </p>
           </div>
           <div className="flex justify-between">
             <DialogClose asChild>
