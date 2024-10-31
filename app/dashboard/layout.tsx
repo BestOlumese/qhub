@@ -1,4 +1,4 @@
-import Bottombar from "@/components/Main/Bottombar";
+
 import Header from "@/components/Main/Header";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import React from "react";
@@ -9,12 +9,11 @@ const Dashboard: React.FC<{
   return (
     <div className="flex  max-h-screen overflow-hidden">
       <div className="max-md:hidden">
-      <Sidebar />
+        <Sidebar />
       </div>
       <div className="flex-1 max-h-screen overflow-y-auto h-full ">
         <Header />
         {children}
-        {/* <Bottombar /> */}
       </div>
     </div>
   );
