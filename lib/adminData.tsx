@@ -7,23 +7,24 @@ import {
 } from "@tabler/icons-react";
 export const reportsPageStat = [
   {
+    sub: "Total Courses",
+    percent: "-10% since last month",
+    value: "500",
+    icon: <IconCertificate className="text-primary w-5 h-5" />,
+  },
+  {
     sub: "Course Enrollments",
     value: "500",
     percent: "+10% since last month",
     icon: <IconBook className="text-primary w-5 h-5" />,
   },
   {
-    sub: "Average daily learning time",
+    sub: "Hours spent",
     percent: "+10% from yesterday",
     value: "5hrs",
     icon: <IconClock className="text-primary w-5 h-5" />,
   },
-  {
-    sub: "Certificates awarded",
-    percent: "-10% since last month",
-    value: "500",
-    icon: <IconCertificate className="text-primary w-5 h-5" />,
-  },
+
   {
     sub: "Total Employees",
     percent: "+10% since last month",
@@ -74,6 +75,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "active",
+    startDate: "2023-01-01",
   },
   {
     id: "2",
@@ -81,6 +83,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "inactive",
+    startDate: "2023-01-01",
   },
   {
     id: "3",
@@ -88,6 +91,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "active",
+    startDate: "2023-01-01",
   },
   {
     id: "4",
@@ -95,6 +99,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "inactive",
+    startDate: "2023-01-01",
   },
   {
     id: "5",
@@ -102,6 +107,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "active",
+    startDate: "2023-01-01",
   },
   {
     id: "6",
@@ -109,6 +115,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "inactive",
+    startDate: "2023-01-01",
   },
   {
     id: "7",
@@ -116,6 +123,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "active",
+    startDate: "2023-01-01",
   },
   {
     id: "8",
@@ -123,6 +131,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "inactive",
+    startDate: "2023-01-01",
   },
   {
     id: "9",
@@ -130,6 +139,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "active",
+    startDate: "2023-01-01",
   },
   {
     id: "10",
@@ -137,6 +147,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "inactive",
+    startDate: "2023-01-01",
   },
   {
     id: "11",
@@ -144,6 +155,7 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "inactive",
+    startDate: "2023-01-01",
   },
   {
     id: "12",
@@ -151,12 +163,13 @@ export const employees = [
     email: "taiwo@gmail.com",
     role: "admin",
     status: "inactive",
+    startDate: "2023-01-01",
   },
 ];
 
 export const courses = [
   {
-    id:"1",
+    id: "1",
     name: "Introduction to JavaScript",
     category: "Technology",
     duration: "6 weeks",
@@ -165,7 +178,7 @@ export const courses = [
     endDate: "2023-01-31",
   },
   {
-    id:"2",
+    id: "2",
     name: "Introduction to JavaScript",
     category: "Technology",
     duration: "6 weeks",
@@ -174,7 +187,7 @@ export const courses = [
     endDate: "2023-01-31",
   },
   {
-    id:"3",
+    id: "3",
     name: "JavaScript for Beginners",
     category: "Technology",
     duration: "6 weeks",
@@ -183,7 +196,7 @@ export const courses = [
     endDate: "2023-01-31",
   },
   {
-    id:"4",
+    id: "4",
     name: "Learn JavaScript",
     category: "Technology",
     duration: "6 weeks",

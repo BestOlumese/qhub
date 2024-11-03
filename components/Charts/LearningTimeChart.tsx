@@ -120,23 +120,51 @@ const chartData = [
   { date: "2024-06-30", hours: 446, mobile: 400 },
 ];
 import { IconBook } from "@tabler/icons-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export default function LearningTimeChart() {
   return (
     <Card className="rounded-3xl flex flex-col ">
-      <CardHeader className="max-md:items-center flex justify-center">
-        <CardTitle className="text-sm font-medium flex items-center text-slate-600 font-plus">
-          <IconBook className="h-4 w-4  text-muted-foreground inline mr-2" />
-          Learning Hours
-        </CardTitle>
+      <CardHeader className="flex max-md:flex-col w-full flex-row justify-between items-center space-y-2 pb-4">
+        <div>
+          <CardTitle className="text-sm font-medium flex items-center text-slate-600 font-plus">
+            <IconBook className="h-4 w-4  text-muted-foreground inline mr-2" />
+            Hours Spent
+          </CardTitle>
 
-        <CardDescription className="text-2xl max-md:text-center mt-2 text-black flex flex-col font-bold">
-          <>
-            50hrs
-            <span className={`text-xs text-slate-500 mt-1`}>
-              +{25}% from yesterday
-            </span>
-          </>
-        </CardDescription>
+          <CardDescription className="text-2xl max-md:text-center mt-2 text-black flex flex-col font-bold">
+            <>
+              50hrs
+              <span className={`text-xs text-slate-500 mt-1`}>
+                +{25}% from yesterday
+              </span>
+            </>
+          </CardDescription>
+        </div>
+        <Select>
+          <SelectTrigger
+            className="w-[160px] rounded-lg sm:ml-auto shadow-none "
+            aria-label="Select a value"
+          >
+            <SelectValue placeholder="Daily" />
+          </SelectTrigger>
+          <SelectContent className="rounded-xl">
+            <SelectItem value="1d" className="rounded-lg">
+              Daily
+            </SelectItem>
+            <SelectItem value="90d" className="rounded-lg">
+              Monthly
+            </SelectItem>
+            <SelectItem value="7d" className="rounded-lg">
+              Last 7 days
+            </SelectItem>
+          </SelectContent>
+        </Select>
       </CardHeader>
 
       <CardContent className="px-2 sm:p-6">

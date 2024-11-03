@@ -9,16 +9,10 @@ const IntroVideoUpload = () => {
 
   return (
     <div className="grid gap-6 mt-4">
-      <Label htmlFor="intro-video">Course Intro Video</Label>
-
+      <Label htmlFor="intro-video">Course Intro Video (Optional)</Label>
       <VideoUpload file={videoFile} setFile={setVideoFile} />
-
-      {videoFile && (
-        <>
-          <Label htmlFor="image-upload">Upload a Display Image</Label>
-          <ImageUpload file={imageFile} setFile={setImageFile} />
-        </>
-      )}
+      <Label htmlFor="image-upload">Display Image (Optional)</Label>
+      <ImageUpload file={imageFile} setFile={setImageFile} />
     </div>
   );
 };

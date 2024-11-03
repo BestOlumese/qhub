@@ -42,11 +42,11 @@ export const sidebar = [
     icon: <IconFile />,
     link: "/dashboard/resources",
   },
-  {
-    name: "Reports",
-    icon: <IconChartPie />,
-    link: "/dashboard/reports",
-  },
+  // {
+  //   name: "Reports",
+  //   icon: <IconChartPie />,
+  //   link: "/dashboard/reports",
+  // },
   // {
   //   name: "Profile",
   //   icon: <IconUser />,
@@ -362,32 +362,6 @@ export const resources = [
   },
 ];
 
-// export const homepageStats = [
-//   {
-//     sub: "Month active employees",
-//     value: "50+",
-//     percent: "+10%",
-//     icon: education,
-//   },
-//   {
-//     sub: "Month completed courses",
-//     value: "30",
-//     percent: "+15%",
-//     icon: doublecheck,
-//   },
-//   {
-//     sub: "Average assessment score",
-//     value: "70%",
-//     percent: "-3%",
-//     icon: education,
-//   },
-//   {
-//     sub: "Month learning time",
-//     value: "24hrs",
-//     percent: "+5%",
-//     icon: clock,
-//   },
-// ];
 export const homepageStats = [
   {
     sub: "No of Courses",
@@ -406,9 +380,9 @@ export const homepageStats = [
     icon: <IconChecks className="text-primary w-5 h-5" />,
   },
   {
-    sub: "No of Completed Courses",
-    value: "500",
-    icon: <IconChecks className="text-primary w-5 h-5" />,
+    sub: "No of Enrollments",
+    value: "100",
+    icon: <IconBook className="text-primary w-5 h-5" />,
   },
 ];
 export const topratedCourses = [

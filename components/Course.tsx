@@ -31,12 +31,12 @@ const Course = ({ enrolled }: { enrolled: boolean }) => {
           </div>
         ) : (
           <div>
-            <p className="max-lg:text-sm">
+            <p className="text-sm">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Molestias, consectetur.
             </p>
 
-            <div className="border-t max-lg:text-xs border-t-black/20 w-full flex gap-4 mt-2 items-center p-2 pb-0 px-3 ">
+            <div className="border-t text-sm border-t-black/20 w-full flex gap-4 mt-2 items-center p-2 pb-0 px-3 ">
               <p>15 Lessons</p>
               <hr className="rotate-90 border border-black/20 w-6" />
               <p>18 students</p>

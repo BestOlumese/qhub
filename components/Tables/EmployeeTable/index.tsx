@@ -77,6 +77,10 @@ const EmployeeTable = () => {
       },
     },
     {
+      accessorKey: "startDate",
+      header: "Start Date",
+    },
+    {
       accessorKey: "role",
       header: "Role",
     },

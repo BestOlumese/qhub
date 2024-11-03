@@ -6,7 +6,7 @@ import Menu from "@/components/Courses/Menu";
 const EmployeeCoursesPage = () => {
   const [showEnrolled, setShowEnrolled] = useState(false);
   return (
-    <div className="p-6 h-full">
+    <div className=" h-full">
       <Menu showEnrolled={showEnrolled} setShowEnrolled={setShowEnrolled} />
       <AllCourses showEnrolled={showEnrolled} />
     </div>

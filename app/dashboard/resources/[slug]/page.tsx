@@ -21,29 +21,20 @@ const Page = () => {
 
           <p className="text-sm text-gray-500">1hr 20mins read</p>
           <p className="text-sm text-gray-400">PDF</p>
-          <Button className="mt-4 bg-primary hover:bg-primary/90 max-lg:hidden">
-            Download
-          </Button>
-        </div>
-        <div className="flex gap-2 items-center mt-4">
-          <Button
-            className=" bg-primary hover:bg-primary/90 lg:hidden"
-            size={"sm"}
-          >
-            Download
-          </Button>
-          <Button
-            variant={"outline"}
-            className=" flex  items-center "
-            size={"sm"}
-          >
-            <IconPencil className="w-4 h-4 mr-1" />
-            Edit
-          </Button>
-          <Button size={"sm"} className="bg-primary hover:bg-primary/90">
-            <IconTrash className="w-4 h-4 mr-1" />
-            Delete
-          </Button>
+          <div className="flex gap-2 items-center mt-4">
+            <Button size={"sm"} variant={"outline"}>
+              <IconTrash className="w-4 h-4 mr-1" />
+              Delete
+            </Button>
+            <Button
+              variant={"default"}
+              className="bg-primary hover:bg-primary/90"
+              size={"sm"}
+            >
+              <IconPencil className="w-4 h-4 mr-1" />
+              Edit
+            </Button>
+          </div>
         </div>
       </div>
       <div className=" p-6 rounded-md border  w-full lg:col-span-3">
