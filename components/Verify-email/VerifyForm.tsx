@@ -3,11 +3,16 @@ import React, { useState } from "react";
 import useVerifyForm from "@/hooks/useVerifyForm";
 import FormFooter from "../ui/Form/FormFooter";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation } from "@apollo/client";
 import { VERIFY_USER } from "@/lib/graphql";
-const VerifyForm = ({ userId }: { userId?: string | null }) => {
+const VerifyForm = () => {
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("user");
   const router = useRouter();
+  if (!userId) {
+    router.push("/register");
+  }
   const {
     code,
 
@@ -29,16 +34,16 @@ const VerifyForm = ({ userId }: { userId?: string | null }) => {
     setError("");
 
     try {
-      const {data} = await verifyUser({
+      const { data } = await verifyUser({
         variables: {
           input: {
-            otp: code.join(''),
+            otp: code.join(""),
             userId,
           },
         },
       });
-      toast.success("Verified successfully");      
-      
+      toast.success("Verified successfully");
+
       router.push(`/verified`);
     } catch (err: any) {
       console.error(err);
