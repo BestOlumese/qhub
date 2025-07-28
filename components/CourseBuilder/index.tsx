@@ -65,7 +65,8 @@ const CourseBuilder = () => {
           },
         },
       });
-      
+
+      console.log("Course created:", data);
       if (data?.addCourse?._id) {
         setCourseId(data.addCourse._id);
         setCurrentStep(2);
@@ -130,8 +131,8 @@ const CourseBuilder = () => {
       </div>
       <div className="w-full mt-4 min-h-[calc(100vh-200px)] bg-white rounded-md  border border-gray-300">
         {currentStep === 1 && (
-          <Step1CourseInfo 
-            onNext={handleNextStep} 
+          <Step1CourseInfo
+            onNext={handleNextStep}
             courseInput={courseInput}
             setCourseInput={setCourseInput}
           />
