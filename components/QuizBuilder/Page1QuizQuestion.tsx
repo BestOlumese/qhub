@@ -12,7 +12,7 @@ import {
 
 import { Button } from "../ui/button";
 import dynamic from "next/dynamic";
-import { Question } from "@/lib/types";
+import { Question, Quiz } from "@/lib/types";
 import MultiChoiceOption from "./MultiChoiceOption";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import { questionTypes } from "@/lib/adminData";
@@ -46,7 +46,7 @@ const Page1QuizQuestion = ({
   question,
   handleAnswerExplanationChange,
   isEditing,
-  setQuiz // Add this to destructured props
+  setQuiz, // Add this to destructured props
 }: Page1QuizQuestionProps) => {
   console.log(questionTypes, "questionTypes");
   const [selectedOption, setSelectedOption] = useState(

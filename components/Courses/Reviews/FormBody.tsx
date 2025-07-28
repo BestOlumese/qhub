@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/ActionButton";
 import { Input } from "@/components/ui/Form/Input";
 import { Label } from "@/components/ui/Form/Label";
 import LabelInputContainer from "@/components/ui/Form/LabelInputContainer";

@@ -1,10 +1,10 @@
-import React from "react";
-import LabelInputContainer from "@/components/ui/Form/LabelInputContainer";
-import { Label } from "@/components/ui/Form/Label";
 import { Input } from "@/components/ui/Form/Input";
-import Image from "next/image";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
+import { Label } from "@/components/ui/Form/Label";
+import LabelInputContainer from "@/components/ui/Form/LabelInputContainer";
 import { UserInputs } from "@/lib/types";
+import { LucideLoader2 } from "lucide-react";
+import Image from "next/image";
+import { FaArrowLeft } from "react-icons/fa6";
 import { LuLoaderCircle } from "react-icons/lu";
 const SecondSetup = ({
   userInputs,
@@ -93,8 +93,10 @@ const SecondSetup = ({
         )}
         {isUploading && (
           <div className="flex items-center gap-2 mt-2">
-            <LuLoader2 className="animate-spin w-4 h-4" />
-            <span className="text-sm text-neutral-500">Uploading... Please wait</span>
+            <LucideLoader2 className="animate-spin w-4 h-4" />
+            <span className="text-sm text-neutral-500">
+              Uploading... Please wait
+            </span>
           </div>
         )}
         {logoPreview && (

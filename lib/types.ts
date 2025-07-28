@@ -17,12 +17,13 @@ export type Employee = {
   email: string;
 };
 export interface Lesson {
+  duration: any;
   id: string;
   name: string;
   content: string;
   featuredImage: string;
   video: string;
-  exerciseFiles: File[];
+  exerciseFiles: string[];
 }
 export interface Quiz {
   id: string;

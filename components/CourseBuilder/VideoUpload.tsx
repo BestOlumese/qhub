@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useRef } from "react";
-import { Button } from "../ui/button";
 import fire from "@/assets/icons/fire.gif";
 import { cn } from "@/lib/utils";
 import { useUploadThing } from "@/utils/uploadthing";
 import { Loader2 } from "lucide-react";
+import { Button } from "../ui/button";
 
 const VideoUpload = ({
   file,
@@ -87,8 +87,8 @@ const VideoUpload = ({
                 File format: <b>.mp4, .mov</b>
               </p>
               <p className="my-2 text-xs ">Or</p>
-              <Button 
-                className="bg-primary hover:bg-primary/90" 
+              <Button
+                className="bg-primary hover:bg-primary/90"
                 type="button"
                 disabled={isUploading}
               >

@@ -9,21 +9,25 @@ const IntroVideoUpload = ({ courseInput, setCourseInput }: any) => {
   return (
     <div className="grid gap-6 mt-4">
       <Label htmlFor="intro-video">Course Intro Video (Optional)</Label>
-      <VideoUpload 
+      <VideoUpload
         file={courseInput.introVideoUrl}
-        setFile={(url) => setCourseInput(prev => ({ 
-          ...prev, 
-          introVideoUrl: url 
-        }))}
+        setFile={(url) =>
+          setCourseInput((prev: any) => ({
+            ...prev,
+            introVideoUrl: url,
+          }))
+        }
       />
-      
+
       <Label htmlFor="image-upload">Display Image (Optional)</Label>
-      <ImageUpload 
+      <ImageUpload
         file={courseInput.displayImageUrl}
-        setFile={(url) => setCourseInput(prev => ({ 
-          ...prev, 
-          displayImageUrl: url 
-        }))}
+        setFile={(url) =>
+          setCourseInput((prev: any) => ({
+            ...prev,
+            displayImageUrl: url,
+          }))
+        }
       />
     </div>
   );

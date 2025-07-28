@@ -11,18 +11,18 @@ const AccountSetup = ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const cookieStore = cookies();
-  const email = cookieStore.get('email')?.value;
+  const email = cookieStore.get("email")?.value;
   console.log(email);
-  
-  if(!searchParams.user && !email) {
-    redirect('/login')
+
+  if (!searchParams.user && !email) {
+    redirect("/login");
   }
   return (
     <div className="h-screen  bg-primary-light z-[10] flex items-center justify-center ">
       <Background />
       <div className="bg-white shadow-md p-10 z-[10] rounded-md md:w-[500px] max-md:min-w-[90%] max-[600px]:max-w-xs">
         <FormHeading title="Set Up Your Account" />
-        <AccountSetupForm email={email} />
+        <AccountSetupForm email={email!} />
       </div>
     </div>
   );

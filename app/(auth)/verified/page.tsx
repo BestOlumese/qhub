@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ActionButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { FaCheck } from "react-icons/fa";

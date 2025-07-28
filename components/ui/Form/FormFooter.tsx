@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { Button } from "../../Button";
+import { Button } from "../../ActionButton";
 const FormFooter = ({
   buttonText,
   showExtraText,
@@ -18,7 +18,7 @@ const FormFooter = ({
   return (
     <div className="space-y-4">
       <div className="my-4 w-full flex items-center flex-col">
-        <Button text={buttonText} loading={loading} type="submit"/>
+        <Button text={buttonText} loading={loading} type="submit" />
         {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
       </div>
       {showExtraText && (

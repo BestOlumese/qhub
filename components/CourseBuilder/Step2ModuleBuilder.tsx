@@ -1,13 +1,13 @@
 import React from "react";
 import ModuleBuilder from "./ModuleBuilder";
-import { Button } from "../ui/button";
 import { useMutation } from "@apollo/client";
-import { 
-  ADD_COURSE_MODULE, 
+import {
+  ADD_COURSE_MODULE,
   EDIT_COURSE_MODULE,
-  DELETE_COURSE_MODULE 
+  DELETE_COURSE_MODULE,
 } from "@/lib/graphql";
 import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 interface Step2ModuleBuilderProps {
   onNext: () => void;
@@ -22,7 +22,7 @@ const Step2ModuleBuilder = ({
   onPrevious,
   courseId,
   modules,
-  setModules
+  setModules,
 }: Step2ModuleBuilderProps) => {
   const router = useRouter();
   const [addCourseModule] = useMutation(ADD_COURSE_MODULE);
@@ -31,21 +31,21 @@ const Step2ModuleBuilder = ({
 
   const handleSubmit = async () => {
     console.log(modules, "Submitting modules for course:", courseId);
-    
+
     try {
       // Create/update modules
-      for (const module of modules) {
-        if (module._id) {
+      for (const mod of modules) {
+        if (mod._id) {
           // Update existing module
           await editCourseModule({
             variables: {
               editCourseModuleInput: {
-                id: module._id,
+                id: mod._id,
                 courseId,
-                name: module.name,
-                summary: module.summary
-              }
-            }
+                name: mod.name,
+                summary: mod.summary,
+              },
+            },
           });
         } else {
           // Create new module
@@ -53,25 +53,23 @@ const Step2ModuleBuilder = ({
             variables: {
               courseModuleInput: {
                 courseId,
-                name: module.name,
-                summary: module.summary
-              }
-            }
+                name: mod.name,
+                summary: mod.summary,
+              },
+            },
           });
-          
+
           // Update local ID
           if (data?.addCourseModule?._id) {
-            setModules(prev => 
-              prev.map(m => 
-                m.id === module.id 
-                  ? { ...m, _id: data.addCourseModule._id } 
-                  : m
+            setModules((prev) =>
+              prev.map((m) =>
+                m.id === mod.id ? { ...m, _id: data.addCourseModule._id } : m
               )
             );
           }
         }
       }
-      
+
       onNext();
     } catch (error) {
       console.error("Module submission failed:", error);
@@ -82,9 +80,9 @@ const Step2ModuleBuilder = ({
   const handleDeleteModule = async (moduleId: string) => {
     try {
       await deleteCourseModule({
-        variables: { moduleId }
+        variables: { moduleId },
       });
-      setModules(prev => prev.filter(m => m.id !== moduleId));
+      setModules((prev) => prev.filter((m) => m.id !== moduleId));
     } catch (error) {
       console.error("Module deletion failed:", error);
     }
@@ -98,9 +96,9 @@ const Step2ModuleBuilder = ({
           Add modules, lessons and quizzes to your course
         </p>
       </div>
-      <ModuleBuilder 
-        modules={modules} 
-        setModules={setModules} 
+      <ModuleBuilder
+        modules={modules}
+        setModules={setModules}
         courseId={courseId}
         onDeleteModule={handleDeleteModule}
       />

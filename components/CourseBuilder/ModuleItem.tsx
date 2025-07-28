@@ -29,7 +29,7 @@ const ModuleItem = ({
   onAddLesson,
   onAddQuiz,
   onEditLesson,
-  onEditQuiz
+  onEditQuiz,
 }: ModuleItemProps) => {
   return (
     <AccordionItem
@@ -42,9 +42,7 @@ const ModuleItem = ({
             <span className="text-sm font-medium text-gray-500">
               Module {moduleIndex + 1}
             </span>
-            <h3 className="text-lg font-medium text-gray-900">
-              {module.name}
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900">{module.name}</h3>
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -129,7 +127,7 @@ const ModuleItem = ({
           </div>
         )}
 
-        <ModuleItemCategories 
+        <ModuleItemCategories
           onAddLesson={() => onAddLesson(module.id)}
           onAddQuiz={() => onAddQuiz(module.id)}
         />

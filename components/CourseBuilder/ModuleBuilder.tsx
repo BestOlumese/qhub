@@ -257,7 +257,7 @@ const ModuleBuilder = ({
             initialQuiz={currentQuiz}
             onSave={(savedQuiz) => {
               console.log(savedQuiz);
-              
+
               // Handle saving the quiz to the module
               setModules((prev) =>
                 prev.map((module) => {
@@ -266,7 +266,7 @@ const ModuleBuilder = ({
                       // Update existing quiz
                       return {
                         ...module,
-                        quizzes: module.quizzes.map((q) =>
+                        quizzes: module.quizzes.map((q: any) =>
                           q.id === savedQuiz.id ? savedQuiz : q
                         ),
                       };
