@@ -7,15 +7,22 @@ const MultiChoiceOption = ({
   onChange,
   options,
   handleAddOption,
+  selectedOption,
+  setSelectedOption
 }: {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options: Option[];
   handleAddOption: () => void;
+  selectedOption: string;
+  setSelectedOption: (id: string) => void;
 }) => {
   return (
     <>
       <div className="bg-gray-200 rounded-md p-4">
-        <RadioGroup defaultValue={options[0].id}>
+        <RadioGroup 
+          value={selectedOption} 
+          onValueChange={setSelectedOption}
+        >
           {options.map((option, index) => (
             <div
               className="flex items-center space-x-2 bg-white p-4 rounded-md"

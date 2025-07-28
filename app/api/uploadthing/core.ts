@@ -11,6 +11,10 @@ export const ourFileRouter = {
     .onUploadComplete(({ file }) => {
       console.log("Uploaded file:", file.url);
     }),
+  fileUploader: f({ image: { maxFileSize: "32MB" } }) // accept video files only
+    .onUploadComplete(({ file }) => {
+      console.log("Uploaded file:", file.url);
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

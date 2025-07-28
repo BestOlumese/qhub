@@ -1,13 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
 import { Button } from "../ui/button";
-
 import QuestionBoard from "./QuestionBoard";
 import Page1QuizQuestion from "./Page1QuizQuestion";
-import { DialogClose } from "../ui/dialog";
 import { Quiz } from "@/lib/types";
+
 const Step2QuizQuestion = ({
   handleNextStep,
   handlePrevStep,
@@ -156,6 +154,7 @@ const Step2QuizQuestion = ({
           question={activeQuestion}
           isEditing={editIndex !== null}
           handleAnswerExplanationChange={handleAnswerExplanationChange}
+          setQuiz={setQuiz}
         />
       )}
       {quizPageNo === 2 && (
@@ -167,18 +166,18 @@ const Step2QuizQuestion = ({
             onAdd={handleAddNewQuestion}
           />
           <div className="flex justify-between w-full flex-row mt-4 ">
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <DialogClose asChild>
-              <Button
-                className="bg-primary hover:bg-primary/90"
-                type="submit"
-                onClick={onSubmit}
-              >
-                {isEditQuiz ? "Update Quiz" : "Save & Next"}
-              </Button>
-            </DialogClose>
+            <Button variant="outline" onClick={handlePrevQuizPage}>
+              Back
+            </Button>
+            <Button
+              className="bg-primary hover:bg-primary/90"
+              onClick={() => {
+                onSubmit();
+                if (!isEditQuiz) handleNextStep();
+              }}
+            >
+              {isEditQuiz ? "Update Quiz" : "Save & Next"}
+            </Button>
           </div>
         </>
       )}

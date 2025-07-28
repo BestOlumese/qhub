@@ -18,12 +18,12 @@ const Header = () => {
 
 
     const name = `${firstName} ${lastName}`;
-    const avatarUrl = `https://avatar.iran.liara.run/username?username=${firstName}+${lastName}`;
+    // const avatarUrl = `https://avatar.iran.liara.run/username?username=${firstName}+${lastName}`;
     const readableRole = userRole === "organizationOwner" ? "Admin" : "Employee";
 
     setFullName(name);
     setRole(readableRole);
-    setUserPic(avatarUrl);
+    // setUserPic(avatarUrl);
     setLogo(logo);
   }, []);
 
@@ -37,9 +37,10 @@ const Header = () => {
           <Image
             src={userPic}
             alt="avatar"
+            priority
             className="md:w-14 w-10 h-10 md:h-14 rounded-full"
-            width={20}
-            height={20}
+            width={50}
+            height={50}
           />
           <div className="flex justify-center flex-col max-xl:hidden">
             <p className="mb-1 text-[14px] font-bold">{fullName}</p>

@@ -8,12 +8,6 @@ import React from "react";
 const Dashboard: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
-  
-  if (!accessToken) {
-    redirect("/login");
-  }
   return (
     <div className="flex  max-h-screen overflow-hidden">
       <div className="max-md:hidden">

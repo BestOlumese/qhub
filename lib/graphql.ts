@@ -106,3 +106,31 @@ export const DELETE_COURSE_MODULE = gql`
     }
   }
 `;
+
+export const ADD_LESSON = gql`
+  mutation AddLesson($lessonInput: LessonInput!) {
+    addLesson(lessonInput: $lessonInput) {
+      _id
+      name
+      index
+      contentUrl
+      videoUrl
+      imageUrl
+      extraResourcesUrl
+      createdAt
+      updatedAt
+      courseModule {
+        _id
+      }
+    }
+  }
+`;
+
+export const ADD_QUIZ = gql`
+  mutation AddModuleQuiz($quizInput: QuizInput!) {
+    addModuleQuiz(quizInput: $quizInput) {
+      _id
+      title
+    }
+  }
+`;
