@@ -1,3 +1,4 @@
+// ModuleBuilder.tsx (parent component)
 "use client";
 import React, { useState } from "react";
 import { IconCirclePlus } from "@tabler/icons-react";
@@ -15,6 +16,8 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import ModuleItem from "./ModuleItem";
 import { Accordion } from "@/components/ui/accordion";
+import LessonBuilder from "./LessonBuilder";
+import QuizBuilder from "../QuizBuilder";
 
 interface ModuleBuilderProps {
   modules: any[];
@@ -27,10 +30,12 @@ const ModuleBuilder = ({
   modules,
   setModules,
   courseId,
-  onDeleteModule
+  onDeleteModule,
 }: ModuleBuilderProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeModuleIndex, setActiveModuleIndex] = useState<number | null>(null);
+  const [activeModuleIndex, setActiveModuleIndex] = useState<number | null>(
+    null
+  );
   const [newModule, setNewModule] = useState({
     id: uuidv4(),
     name: "",
@@ -39,12 +44,17 @@ const ModuleBuilder = ({
     quizzes: [],
   });
 
+  // State for lesson/quiz dialogs
+  const [isLessonDialogOpen, setIsLessonDialogOpen] = useState(false);
+  const [isQuizDialogOpen, setIsQuizDialogOpen] = useState(false);
+  const [currentModuleId, setCurrentModuleId] = useState<string | null>(null);
+  const [currentLesson, setCurrentLesson] = useState<any>(null);
+  const [currentQuiz, setCurrentQuiz] = useState<any>(null);
+
   const handleUpdateModule = () => {
     if (activeModuleIndex !== null) {
-      setModules(prev => 
-        prev.map((mod, idx) => 
-          idx === activeModuleIndex ? newModule : mod
-        )
+      setModules((prev) =>
+        prev.map((mod, idx) => (idx === activeModuleIndex ? newModule : mod))
       );
     } else {
       setModules([...modules, newModule]);
@@ -68,13 +78,89 @@ const ModuleBuilder = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { id, value } = e.target;
-    setNewModule(prev => ({ ...prev, [id]: value }));
+    setNewModule((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleEditModule = (index: number) => {
     setActiveModuleIndex(index);
     setNewModule(modules[index]);
     setIsOpen(true);
+  };
+
+  // Lesson handlers
+  const handleAddLesson = (moduleId: string) => {
+    setCurrentModuleId(moduleId);
+    setCurrentLesson(null);
+    setIsLessonDialogOpen(true);
+  };
+
+  const handleEditLesson = (lesson: any) => {
+    setCurrentLesson(lesson);
+    setIsLessonDialogOpen(true);
+  };
+
+  const handleSaveLesson = (lessonData: any) => {
+    setModules((prev) =>
+      prev.map((module) => {
+        if (module.id === currentModuleId) {
+          if (currentLesson) {
+            // Update existing lesson
+            return {
+              ...module,
+              lessons: module.lessons.map((l: any) =>
+                l.id === lessonData.id ? lessonData : l
+              ),
+            };
+          } else {
+            // Add new lesson
+            return {
+              ...module,
+              lessons: [...module.lessons, lessonData],
+            };
+          }
+        }
+        return module;
+      })
+    );
+    setIsLessonDialogOpen(false);
+  };
+
+  // Quiz handlers
+  const handleAddQuiz = (moduleId: string) => {
+    setCurrentModuleId(moduleId);
+    setCurrentQuiz(null);
+    setIsQuizDialogOpen(true);
+  };
+
+  const handleEditQuiz = (quiz: any) => {
+    setCurrentQuiz(quiz);
+    setIsQuizDialogOpen(true);
+  };
+
+  const handleSaveQuiz = (quizData: any) => {
+    setModules((prev) =>
+      prev.map((module) => {
+        if (module.id === currentModuleId) {
+          if (currentQuiz) {
+            // Update existing quiz
+            return {
+              ...module,
+              quizzes: module.quizzes.map((q: any) =>
+                q.id === quizData.id ? quizData : q
+              ),
+            };
+          } else {
+            // Add new quiz
+            return {
+              ...module,
+              quizzes: [...module.quizzes, quizData],
+            };
+          }
+        }
+        return module;
+      })
+    );
+    setIsQuizDialogOpen(false);
   };
 
   return (
@@ -90,11 +176,15 @@ const ModuleBuilder = ({
               moduleIndex={index}
               onEdit={() => handleEditModule(index)}
               onDelete={() => onDeleteModule(module.id)}
+              onAddLesson={handleAddLesson}
+              onAddQuiz={handleAddQuiz}
+              onEditLesson={handleEditLesson}
+              onEditQuiz={handleEditQuiz}
             />
           ))}
         </Accordion>
       )}
-      
+
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
           <Button className="mt-4 flex items-center gap-2">
@@ -127,10 +217,7 @@ const ModuleBuilder = ({
             />
           </div>
           <div className="flex justify-end gap-3">
-            <Button 
-              variant="outline" 
-              onClick={() => setIsOpen(false)}
-            >
+            <Button variant="outline" onClick={() => setIsOpen(false)}>
               Cancel
             </Button>
             <Button
@@ -140,6 +227,63 @@ const ModuleBuilder = ({
               {activeModuleIndex !== null ? "Update" : "Create"}
             </Button>
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Lesson Dialog */}
+      <Dialog open={isLessonDialogOpen} onOpenChange={setIsLessonDialogOpen}>
+        <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {currentLesson ? "Edit Lesson" : "Create New Lesson"}
+            </DialogTitle>
+          </DialogHeader>
+          <LessonBuilder
+            onSave={handleSaveLesson}
+            initialLesson={currentLesson}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Quiz Dialog */}
+      <Dialog open={isQuizDialogOpen} onOpenChange={setIsQuizDialogOpen}>
+        <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {currentQuiz ? "Edit Quiz" : "Create New Quiz"}
+            </DialogTitle>
+          </DialogHeader>
+          <QuizBuilder
+            initialQuiz={currentQuiz}
+            onSave={(savedQuiz) => {
+              console.log(savedQuiz);
+              
+              // Handle saving the quiz to the module
+              setModules((prev) =>
+                prev.map((module) => {
+                  if (module.id === currentModuleId) {
+                    if (currentQuiz) {
+                      // Update existing quiz
+                      return {
+                        ...module,
+                        quizzes: module.quizzes.map((q) =>
+                          q.id === savedQuiz.id ? savedQuiz : q
+                        ),
+                      };
+                    } else {
+                      // Add new quiz
+                      return {
+                        ...module,
+                        quizzes: [...(module.quizzes || []), savedQuiz],
+                      };
+                    }
+                  }
+                  return module;
+                })
+              );
+              setIsQuizDialogOpen(false);
+            }}
+          />
         </DialogContent>
       </Dialog>
     </div>

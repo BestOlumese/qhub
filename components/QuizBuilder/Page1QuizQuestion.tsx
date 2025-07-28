@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import {
@@ -21,6 +21,20 @@ import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Option } from "@/lib/types";
 import ShortAnswerOption from "./ShortAnswerOption";
+interface Page1QuizQuestionProps {
+  onNext: () => void;
+  isEditing: boolean;
+  onBack: () => void;
+  handleAddOption: () => void;
+  handleAnswerExplanationChange: (value: string) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleQuestionTypeChange: (value: string) => void;
+  handleReactQuillChange: (value: string) => void;
+  question: Question;
+  handleOptionChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setQuiz: React.Dispatch<React.SetStateAction<Quiz>>; // Add this prop
+}
+
 const Page1QuizQuestion = ({
   onNext,
   onBack,
@@ -32,19 +46,20 @@ const Page1QuizQuestion = ({
   question,
   handleAnswerExplanationChange,
   isEditing,
-}: {
-  onNext: () => void;
-  isEditing: boolean;
-  onBack: () => void;
-  handleAddOption: () => void;
-  handleAnswerExplanationChange: (value: string) => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleQuestionTypeChange: (value: string) => void;
-  handleReactQuillChange: (value: string) => void;
-  question: Question;
-  handleOptionChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) => {
+  setQuiz // Add this to destructured props
+}: Page1QuizQuestionProps) => {
   console.log(questionTypes, "questionTypes");
+  const [selectedOption, setSelectedOption] = useState(
+    question.options.find((opt) => opt.isCorrect)?.id || ""
+  );
+
+  // Add this to your useEffect to set the correct option when question changes
+  useEffect(() => {
+    const correctOption = question.options.find((opt) => opt.isCorrect);
+    if (correctOption) {
+      setSelectedOption(correctOption.id);
+    }
+  }, [question]);
   return (
     <div>
       <div className="grid gap-2">
@@ -161,6 +176,26 @@ const Page1QuizQuestion = ({
                     onChange={handleOptionChange}
                     options={question.options}
                     handleAddOption={handleAddOption}
+                    selectedOption={selectedOption}
+                    setSelectedOption={(id) => {
+                      setSelectedOption(id);
+                      // Update the quiz to mark this option as correct
+                      setQuiz((prev) => ({
+                        ...prev,
+                        questions: prev.questions.map((q) => {
+                          if (q.id === question.id) {
+                            return {
+                              ...q,
+                              options: q.options.map((opt) => ({
+                                ...opt,
+                                isCorrect: opt.id === id,
+                              })),
+                            };
+                          }
+                          return q;
+                        }),
+                      }));
+                    }}
                   />
                 )}
                 {question.questionType === "short-answer" && (

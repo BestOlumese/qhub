@@ -1,21 +1,17 @@
 "use client";
 import { v4 as uuidv4 } from "uuid";
-
 import React, { useState } from "react";
 import { Quiz } from "@/lib/types";
 import Step2QuizQuestion from "./Step2QuizQuestion";
 import Step1QuizInfo from "./Step1QuizInfo";
 import { IconCircleCheckFilled } from "@tabler/icons-react";
-import { Module } from "@/lib/types";
-const QuizBuilder = ({
-  module,
-  setModules,
-  propQuiz,
-}: {
-  module: Module;
-  setModules: React.Dispatch<React.SetStateAction<Module[]>>;
-  propQuiz?: Quiz;
-}) => {
+
+interface QuizBuilderProps {
+  initialQuiz?: Quiz;
+  onSave: (quiz: Quiz) => void;
+}
+
+const QuizBuilder = ({ initialQuiz, onSave }: QuizBuilderProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const defaultQuiz = {
     id: uuidv4(),
@@ -24,31 +20,12 @@ const QuizBuilder = ({
     questions: [],
   };
   const [quizPageNo, setQuizPageNo] = useState(2);
-  const [quiz, setQuiz] = useState<Quiz>(propQuiz || defaultQuiz);
+  const [quiz, setQuiz] = useState<Quiz>(initialQuiz || defaultQuiz);
+  
   const handleSubmit = () => {
-    if (propQuiz) {
-      setModules((prev) =>
-        prev.map((prevModule) =>
-          prevModule.id === module.id
-            ? {
-                ...module,
-                quizzes: prevModule.quizzes?.map((q) =>
-                  q.id === quiz.id ? quiz : q
-                ),
-              }
-            : module
-        )
-      );
-    } else {
-      setModules((prev) =>
-        prev.map((prevModule) =>
-          prevModule.id === module.id
-            ? { ...module, quizzes: [...module.quizzes!, quiz] }
-            : module
-        )
-      );
-    }
+    onSave(quiz);
   };
+
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -70,7 +47,7 @@ const QuizBuilder = ({
   };
   const handleNextQuizPage = () => setQuizPageNo((prev) => prev + 1);
   const handlePrevQuizPage = () => setQuizPageNo((prev) => prev - 1);
-  console.log(quiz, "quiz");
+
   return (
     <>
       <div className="flex gap-4 items-center my-4">
@@ -115,7 +92,7 @@ const QuizBuilder = ({
       {currentStep == 2 && (
         <Step2QuizQuestion
           onSubmit={handleSubmit}
-          isEditQuiz={!!propQuiz}
+          isEditQuiz={!!initialQuiz}
           quizPageNo={quizPageNo}
           quiz={quiz}
           setQuiz={setQuiz}

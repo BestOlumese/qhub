@@ -30,6 +30,8 @@ const Step2ModuleBuilder = ({
   const [deleteCourseModule] = useMutation(DELETE_COURSE_MODULE);
 
   const handleSubmit = async () => {
+    console.log(modules, "Submitting modules for course:", courseId);
+    
     try {
       // Create/update modules
       for (const module of modules) {
