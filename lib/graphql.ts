@@ -134,3 +134,39 @@ export const ADD_QUIZ = gql`
     }
   }
 `;
+
+export const ADD_LMS_USER = gql`
+  mutation AddLmsUser($lmsUserInput: CreateLmsUserInput!) {
+    addLmsUser(lmsUserInput: $lmsUserInput) {
+      _id
+      firstName
+      lastName
+      role
+    }
+  }
+`;
+
+export const LMS_USER_ONBOARDING = gql`
+  mutation CompleteOnBoarding($completeOnboardingDetails: CompleteOnBoardingDetails!) {
+    completeOnboarding(completeOnboardingDetails: $completeOnboardingDetails) {
+      _id
+      firstName
+      lastName
+      role
+    }
+  }
+`;
+
+export const GET_ORGANIZATION_USERS = gql`
+  query GetOrganizationUsers($organizationId: String!) {
+    getOrganizationUsers(organizationId: $organizationId) {
+      _id
+      email
+      firstName
+      lastName
+      onboarded
+      role
+      createdAt
+    }
+  }
+`;
