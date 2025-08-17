@@ -17,13 +17,18 @@ export type Employee = {
   email: string;
 };
 export interface Lesson {
-  duration: any;
-  id: string;
+  id: string; // Local ID (UUID)
+  _id?: string; // Server ID (from MongoDB)
   name: string;
   content: string;
-  featuredImage: string;
-  video: string;
-  exerciseFiles: string[];
+  featuredImage?: string;
+  video?: string;
+  exerciseFiles?: string[];
+  duration?: number;
+  index?: number;
+  moduleId?: string; // Module ID this lesson belongs to
+  createdAt?: string;
+  updatedAt?: string;
 }
 export interface Quiz {
   id: string;
@@ -32,11 +37,15 @@ export interface Quiz {
   questions: Question[];
 }
 export interface Module {
-  id: string;
+  id: string; // Local ID (UUID)
+  _id?: string; // Server ID (from MongoDB)
   name: string;
-  summary?: string;
+  summary: string;
   lessons?: Lesson[];
-  quizzes?: Quiz[];
+  quizzes?: any[];
+  courseId?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 export interface Option {
   id: string;

@@ -11,7 +11,7 @@ export const ourFileRouter = {
     .onUploadComplete(({ file }) => {
       console.log("Uploaded file:", file.url);
     }),
-  fileUploader: f({ image: { maxFileSize: "32MB" } }) // accept video files only
+  fileUploader: f({ blob: { maxFileSize: "32MB" } }) // accept video files only
     .onUploadComplete(({ file }) => {
       console.log("Uploaded file:", file.url);
     }),

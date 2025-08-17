@@ -112,17 +112,33 @@ export const ADD_LESSON = gql`
     addLesson(lessonInput: $lessonInput) {
       _id
       name
-      index
       contentUrl
       videoUrl
       imageUrl
       extraResourcesUrl
-      createdAt
-      updatedAt
-      courseModule {
-        _id
-      }
+      index
     }
+  }
+`;
+
+
+export const EDIT_LESSON = gql`
+  mutation EditLesson($editLessonInput: EditLessonInput!) {
+    editLesson(editLessonInput: $editLessonInput) {
+      _id
+      name
+      contentUrl
+      videoUrl
+      imageUrl
+      extraResourcesUrl
+      index
+    }
+  }
+`;
+
+export const DELETE_LESSON = gql`
+  mutation DeleteLesson($lessonId: String!) {
+    deleteLesson(lessonId: $lessonId)
   }
 `;
 

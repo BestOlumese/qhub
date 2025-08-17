@@ -1,14 +1,13 @@
 import AdminResourcesPage from "@/components/AdminResourcesPage";
 import EmployeeResourcesPage from "@/components/EmployeeResourcesPage";
+import { cookies } from "next/headers";
 import React from "react";
 
 const Page = () => {
-  const user = {
-    role: "admin",
-  };
-  const role = user.role;
+  const cookieStore = cookies();
+      const role = cookieStore.get("role")?.value;
   return (
-    <>{role === "admin" ? <AdminResourcesPage /> : <EmployeeResourcesPage />}</>
+    <>{role === "organizationOwner" || role === "admin" ? <AdminResourcesPage /> : <EmployeeResourcesPage />}</>
   );
 };
 

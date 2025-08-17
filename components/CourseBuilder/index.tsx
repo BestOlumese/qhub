@@ -91,7 +91,7 @@ const CourseBuilder = () => {
 
   const handleSubmitCourse = () => {
     // This would be handled in Step2ModuleBuilder
-    router.push("/courses");
+    router.push("/dashboard/courses");
     toast.success("Course published successfully!");
   };
 

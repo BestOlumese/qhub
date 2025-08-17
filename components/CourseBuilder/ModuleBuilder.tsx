@@ -18,12 +18,14 @@ import ModuleItem from "./ModuleItem";
 import { Accordion } from "@/components/ui/accordion";
 import LessonBuilder from "./LessonBuilder";
 import QuizBuilder from "../QuizBuilder";
+import { Lesson } from "@/lib/types";
 
 interface ModuleBuilderProps {
   modules: any[];
   setModules: React.Dispatch<React.SetStateAction<any[]>>;
   courseId: string;
   onDeleteModule: (moduleId: string) => void;
+  onDeleteLesson?: (lessonId: string, moduleId: string) => void;
 }
 
 const ModuleBuilder = ({
@@ -31,6 +33,7 @@ const ModuleBuilder = ({
   setModules,
   courseId,
   onDeleteModule,
+  onDeleteLesson,
 }: ModuleBuilderProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeModuleIndex, setActiveModuleIndex] = useState<number | null>(
@@ -48,7 +51,7 @@ const ModuleBuilder = ({
   const [isLessonDialogOpen, setIsLessonDialogOpen] = useState(false);
   const [isQuizDialogOpen, setIsQuizDialogOpen] = useState(false);
   const [currentModuleId, setCurrentModuleId] = useState<string | null>(null);
-  const [currentLesson, setCurrentLesson] = useState<any>(null);
+  const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [currentQuiz, setCurrentQuiz] = useState<any>(null);
 
   const handleUpdateModule = () => {
@@ -94,35 +97,81 @@ const ModuleBuilder = ({
     setIsLessonDialogOpen(true);
   };
 
-  const handleEditLesson = (lesson: any) => {
+  const handleEditLesson = (lesson: Lesson, moduleId: string) => {
+    setCurrentModuleId(moduleId);
     setCurrentLesson(lesson);
     setIsLessonDialogOpen(true);
   };
 
-  const handleSaveLesson = (lessonData: any) => {
+  const handleSaveLesson = (lessonData: Lesson) => {
+    // Find the target module
+    const targetModule = modules.find(
+      (mod) => mod.id === currentModuleId || mod._id === currentModuleId
+    );
+
+    if (!targetModule) {
+      console.error("Target module not found");
+      return;
+    }
+
+    // Add index to lesson data
+    const lessonWithIndex = {
+      ...lessonData,
+      index: currentLesson
+        ? currentLesson.index
+        : (targetModule.lessons?.length || 0),
+    };
+
     setModules((prev) =>
       prev.map((module) => {
-        if (module.id === currentModuleId) {
+        if (module.id === currentModuleId || module._id === currentModuleId) {
           if (currentLesson) {
             // Update existing lesson
             return {
               ...module,
-              lessons: module.lessons.map((l: any) =>
-                l.id === lessonData.id ? lessonData : l
-              ),
+              lessons: module.lessons?.map((l: Lesson) =>
+                l.id === lessonData.id || l._id === lessonData._id
+                  ? lessonWithIndex
+                  : l
+              ) || [lessonWithIndex],
             };
           } else {
             // Add new lesson
             return {
               ...module,
-              lessons: [...module.lessons, lessonData],
+              lessons: [...(module.lessons || []), lessonWithIndex],
             };
           }
         }
         return module;
       })
     );
+
     setIsLessonDialogOpen(false);
+    setCurrentLesson(null);
+    setCurrentModuleId(null);
+  };
+
+  const handleDeleteLessonLocal = (lessonId: string, moduleId: string) => {
+    // Call parent delete handler if provided (for server deletion)
+    if (onDeleteLesson) {
+      onDeleteLesson(lessonId, moduleId);
+    } else {
+      // Fallback to local deletion only
+      setModules((prev) =>
+        prev.map((module) => {
+          if (module.id === moduleId || module._id === moduleId) {
+            return {
+              ...module,
+              lessons: module.lessons?.filter(
+                (l: Lesson) => l.id !== lessonId && l._id !== lessonId
+              ) || [],
+            };
+          }
+          return module;
+        })
+      );
+    }
   };
 
   // Quiz handlers
@@ -132,7 +181,8 @@ const ModuleBuilder = ({
     setIsQuizDialogOpen(true);
   };
 
-  const handleEditQuiz = (quiz: any) => {
+  const handleEditQuiz = (quiz: any, moduleId: string) => {
+    setCurrentModuleId(moduleId);
     setCurrentQuiz(quiz);
     setIsQuizDialogOpen(true);
   };
@@ -140,20 +190,20 @@ const ModuleBuilder = ({
   const handleSaveQuiz = (quizData: any) => {
     setModules((prev) =>
       prev.map((module) => {
-        if (module.id === currentModuleId) {
+        if (module.id === currentModuleId || module._id === currentModuleId) {
           if (currentQuiz) {
             // Update existing quiz
             return {
               ...module,
-              quizzes: module.quizzes.map((q: any) =>
-                q.id === quizData.id ? quizData : q
-              ),
+              quizzes: module.quizzes?.map((q: any) =>
+                q.id === quizData.id || q._id === quizData._id ? quizData : q
+              ) || [quizData],
             };
           } else {
             // Add new quiz
             return {
               ...module,
-              quizzes: [...module.quizzes, quizData],
+              quizzes: [...(module.quizzes || []), quizData],
             };
           }
         }
@@ -161,6 +211,8 @@ const ModuleBuilder = ({
       })
     );
     setIsQuizDialogOpen(false);
+    setCurrentQuiz(null);
+    setCurrentModuleId(null);
   };
 
   return (
@@ -171,15 +223,18 @@ const ModuleBuilder = ({
         <Accordion type="single" collapsible className="grid gap-4">
           {modules.map((module, index) => (
             <ModuleItem
-              key={module.id}
+              key={module.id || module._id}
               module={module}
               moduleIndex={index}
               onEdit={() => handleEditModule(index)}
-              onDelete={() => onDeleteModule(module.id)}
+              onDelete={() => onDeleteModule(module.id || module._id)}
               onAddLesson={handleAddLesson}
               onAddQuiz={handleAddQuiz}
-              onEditLesson={handleEditLesson}
-              onEditQuiz={handleEditQuiz}
+              onEditLesson={(lesson) => handleEditLesson(lesson, module.id || module._id)}
+              onEditQuiz={(quiz) => handleEditQuiz(quiz, module.id || module._id)}
+              onDeleteLesson={(lessonId) =>
+                handleDeleteLessonLocal(lessonId, module.id || module._id)
+              }
             />
           ))}
         </Accordion>
@@ -255,34 +310,7 @@ const ModuleBuilder = ({
           </DialogHeader>
           <QuizBuilder
             initialQuiz={currentQuiz}
-            onSave={(savedQuiz) => {
-              console.log(savedQuiz);
-
-              // Handle saving the quiz to the module
-              setModules((prev) =>
-                prev.map((module) => {
-                  if (module.id === currentModuleId) {
-                    if (currentQuiz) {
-                      // Update existing quiz
-                      return {
-                        ...module,
-                        quizzes: module.quizzes.map((q: any) =>
-                          q.id === savedQuiz.id ? savedQuiz : q
-                        ),
-                      };
-                    } else {
-                      // Add new quiz
-                      return {
-                        ...module,
-                        quizzes: [...(module.quizzes || []), savedQuiz],
-                      };
-                    }
-                  }
-                  return module;
-                })
-              );
-              setIsQuizDialogOpen(false);
-            }}
+            onSave={handleSaveQuiz}
           />
         </DialogContent>
       </Dialog>
