@@ -13,10 +13,10 @@ const nextConfig = {
     ],
     // Allow image optimization for local images
     unoptimized: false,
-    eslint: { ignoreDuringBuilds: true },
-    typescript: { ignoreBuildErrors: true },
-    reactStrictMode: true,
   },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+  reactStrictMode: true,
 };
 
 export default nextConfig;
