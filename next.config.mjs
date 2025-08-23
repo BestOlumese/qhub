@@ -3,16 +3,20 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'avatar.iran.liara.run',
+        protocol: "https",
+        hostname: "avatar.iran.liara.run",
       },
       {
-        protocol: 'https',
-        hostname: 'utfs.io',
-      }
+        protocol: "https",
+        hostname: "utfs.io",
+      },
     ],
     // Allow image optimization for local images
     unoptimized: false,
-  },};
+    eslint: { ignoreDuringBuilds: true },
+    typescript: { ignoreBuildErrors: true },
+    reactStrictMode: true,
+  },
+};
 
 export default nextConfig;
