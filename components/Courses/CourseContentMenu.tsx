@@ -17,14 +17,14 @@ const CourseContentMenu = ({
       label: "Curriculum",
     },
 
-    {
-      name: "instructor",
-      label: "Instructor",
-    },
-    {
-      name: "reviews",
-      label: "Reviews",
-    },
+    // {
+    //   name: "instructor",
+    //   label: "Instructor",
+    // },
+    // {
+    //   name: "reviews",
+    //   label: "Reviews",
+    // },
   ];
   return (
     <menu className="flex gap-5 max-[360px]:text-sm md:gap-12 border mt-3 border-transparent border-b-black/20 w-full">

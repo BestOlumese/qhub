@@ -1,13 +1,12 @@
 "use client";
 import React from "react";
 
-const Menu = ({
-  showEnrolled,
-  setShowEnrolled,
-}: {
+interface MenuProps {
   showEnrolled: boolean;
   setShowEnrolled: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+}
+
+const Menu = ({ showEnrolled, setShowEnrolled }: MenuProps) => {
   return (
     <menu className="flex gap-4 border border-transparent border-b-black/20 w-full">
       <div>

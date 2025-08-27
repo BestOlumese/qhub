@@ -1,6 +1,6 @@
 import EmployeeTable from "@/components/Tables/EmployeeTable";
 
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import React from "react";
 
@@ -11,7 +11,7 @@ const Page = () => {
   const cookieStore = cookies();
   const role = cookieStore.get("role")?.value;
   const organizationId = cookieStore.get("organizationId")?.value;
-  if (role !== "organizationOwner") return notFound();
+  if (role !== "organizationOwner") return redirect("/dashboard");
 
   return (
     <div className="p-6">

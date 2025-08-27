@@ -24,10 +24,10 @@ const AdminHome = () => {
       </div>
       <HomepageStats />
       <RecentCourses />
-      <div className="w-full grid  lg:grid-cols-2 mt-6 gap-6">
+      {/* <div className="w-full grid  lg:grid-cols-2 mt-6 gap-6">
         <TopViewedCourse />
         <MostActiveEmployees />
-      </div>
+      </div> */}
     </div>
   );
 };

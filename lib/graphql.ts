@@ -121,7 +121,6 @@ export const ADD_LESSON = gql`
   }
 `;
 
-
 export const EDIT_LESSON = gql`
   mutation EditLesson($editLessonInput: EditLessonInput!) {
     editLesson(editLessonInput: $editLessonInput) {
@@ -163,7 +162,9 @@ export const ADD_LMS_USER = gql`
 `;
 
 export const LMS_USER_ONBOARDING = gql`
-  mutation CompleteOnBoarding($completeOnboardingDetails: CompleteOnBoardingDetails!) {
+  mutation CompleteOnBoarding(
+    $completeOnboardingDetails: CompleteOnBoardingDetails!
+  ) {
     completeOnboarding(completeOnboardingDetails: $completeOnboardingDetails) {
       _id
       firstName
@@ -183,6 +184,132 @@ export const GET_ORGANIZATION_USERS = gql`
       onboarded
       role
       createdAt
+    }
+  }
+`;
+
+export const GET_ORGANIZATION_COURSES = gql`
+  query GetOrganizationCourses($organizationId: String!) {
+    getOrganizationCourses(organizationId: $organizationId) {
+      course {
+        _id
+        title
+        category
+        createdAt
+        updatedAt
+        duration
+        description
+        displayImageUrl
+        introVideoUrl
+      }
+      enrollment {
+        _id
+        completed
+        course {
+          _id
+          title
+          category
+          createdAt
+          updatedAt
+          duration
+          description
+          displayImageUrl
+          introVideoUrl
+        }
+        createdAt
+        progress
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const GET_ORGANIZATION_COURSE_BY_ID = gql`
+  query GetCourseById($courseId: String!) {
+    getCourseById(courseId: $courseId) {
+      course {
+        _id
+        title
+        category
+        createdAt
+        updatedAt
+        duration
+        description
+        displayImageUrl
+        introVideoUrl
+      }
+      enrollment {
+        _id
+        completed
+        course {
+          _id
+          title
+          category
+          createdAt
+          updatedAt
+          duration
+          description
+          displayImageUrl
+          introVideoUrl
+        }
+        createdAt
+        progress
+        updatedAt
+      }
+    }
+  }
+`;
+
+export const GET_COURSE_MODULES = gql`
+  query GetModulesForCourse($courseId: String!) {
+    getModulesForCourse(courseId: $courseId) {
+      _id
+      name
+      summary
+      course {
+        _id
+        title
+        category
+        createdAt
+        updatedAt
+        duration
+        description
+        displayImageUrl
+        introVideoUrl
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const GET_COURSE_MODULE_BY_ID = gql`
+  query GetCourseModuleById($courseModuleId: String!) {
+    getCourseModuleById(courseModuleId: $courseModuleId) {
+      _id
+      name
+      summary
+      course {
+        _id
+        title
+        category
+        createdAt
+        updatedAt
+        duration
+        description
+        displayImageUrl
+        introVideoUrl
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+export const ENROLL_COURSE = gql`
+  mutation EnrollCourse($courseId: String!) {
+    enrollCourse(courseId: $courseId) {
+      message
     }
   }
 `;
