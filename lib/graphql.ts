@@ -277,6 +277,17 @@ export const GET_COURSE_MODULES = gql`
         displayImageUrl
         introVideoUrl
       }
+      lessons {
+        _id
+        contentUrl
+        createdAt
+        extraResourcesUrl
+        imageUrl
+        index
+        name
+        updatedAt
+        videoUrl
+      }
       createdAt
       updatedAt
     }
