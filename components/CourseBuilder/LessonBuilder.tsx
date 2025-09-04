@@ -21,31 +21,21 @@ interface LessonBuilderProps {
 
 const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
   // State for file uploads
-  const [featuredImage, setFeaturedImage] = useState<string | null>(
-    initialLesson?.featuredImage || ""
-  );
-  const [lessonVideo, setLessonVideo] = useState<string | null>(
-    initialLesson?.video || ""
-  );
+  const [featuredImage, setFeaturedImage] = useState<string>("");
+  const [lessonVideo, setLessonVideo] = useState<string>("");
   const [attachmentFiles, setAttachmentFiles] = useState<File[]>([]);
-  const [attachmentUrls, setAttachmentUrls] = useState<string[]>(
-    Array.isArray(initialLesson?.exerciseFiles)
-      ? initialLesson.exerciseFiles.filter((f) => typeof f === "string")
-      : []
-  );
+  const [attachmentUrls, setAttachmentUrls] = useState<string[]>([]);
 
   // State for lesson data
   const [lesson, setLesson] = useState<Lesson>({
-    id: initialLesson?.id || uuidv4(),
-    _id: initialLesson?._id, // Preserve server ID if editing
-    name: initialLesson?.name || "",
-    content: initialLesson?.content || "",
-    featuredImage: initialLesson?.featuredImage || "",
-    video: initialLesson?.video || "",
-    exerciseFiles: initialLesson?.exerciseFiles || [],
-    duration: initialLesson?.duration || 0,
-    index: initialLesson?.index || 0,
-    moduleId: initialLesson?.moduleId,
+    id: uuidv4(),
+    name: "",
+    content: "",
+    featuredImage: "",
+    video: "",
+    exerciseFiles: [],
+    duration: 0,
+    index: 0,
   });
 
   // Upload hooks
@@ -58,14 +48,14 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
 
   const [isSaving, setIsSaving] = useState(false);
 
-  // Reset form when initialLesson changes
+  // Initialize state when initialLesson changes
   useEffect(() => {
     if (initialLesson) {
       setLesson({
         id: initialLesson.id,
         _id: initialLesson._id,
-        name: initialLesson.name,
-        content: initialLesson.content,
+        name: initialLesson.name || "",
+        content: initialLesson.content || "",
         featuredImage: initialLesson.featuredImage || "",
         video: initialLesson.video || "",
         exerciseFiles: initialLesson.exerciseFiles || [],
@@ -73,13 +63,25 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
         index: initialLesson.index || 0,
         moduleId: initialLesson.moduleId,
       });
+      
       setFeaturedImage(initialLesson.featuredImage || "");
       setLessonVideo(initialLesson.video || "");
-      setAttachmentUrls(
-        Array.isArray(initialLesson.exerciseFiles)
-          ? initialLesson.exerciseFiles.filter((f) => typeof f === "string")
-          : []
-      );
+      
+      // Handle exerciseFiles safely
+      try {
+        if (initialLesson.exerciseFiles && Array.isArray(initialLesson.exerciseFiles)) {
+          const urls = initialLesson.exerciseFiles
+            .filter((f: any) => f && typeof f === "string" && f.trim() !== "")
+            .map((f: string) => f.trim());
+          setAttachmentUrls(urls);
+        } else {
+          setAttachmentUrls([]);
+        }
+      } catch (error) {
+        console.error("Error processing exerciseFiles:", error);
+        setAttachmentUrls([]);
+      }
+      
       setAttachmentFiles([]);
     } else {
       // Reset for new lesson
@@ -103,18 +105,34 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
-    if (files && files.length > 0) {
-      console.log("Files selected:", files);
-      const fileArray = Array.from(files);
-      setAttachmentFiles((prev) => {
-        const newFiles = [...prev, ...fileArray];
+    
+    if (!files || files.length === 0) {
+      console.log("No files selected");
+      return;
+    }
+    
+    console.log("Files selected:", Array.from(files));
+    const fileArray = Array.from(files);
+    
+    // Validate and add files
+    const validFiles = fileArray.filter(file => {
+      if (file.size > 50 * 1024 * 1024) { // 50MB limit
+        alert(`File ${file.name} is too large. Maximum size is 50MB.`);
+        return false;
+      }
+      return true;
+    });
+
+    if (validFiles.length > 0) {
+      setAttachmentFiles(prev => {
+        const newFiles = [...prev, ...validFiles];
         console.log("Updated attachment files:", newFiles);
         return newFiles;
       });
-      
-      // Reset the input value so the same file can be selected again if needed
-      event.target.value = '';
     }
+    
+    // Reset input
+    event.target.value = '';
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,53 +154,74 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!lesson.name.trim()) {
+      alert("Please enter a lesson name");
+      return;
+    }
+    
+    if (!lesson.content.trim()) {
+      alert("Please enter lesson content");
+      return;
+    }
+    
     setIsSaving(true);
 
     try {
-      // Upload featured image if changed
       let featuredImageUrl = featuredImage;
+      let videoUrl = lessonVideo;
+      let allExerciseFileUrls: string[] = [...attachmentUrls];
+
+      // Upload featured image if it's a blob URL
       if (featuredImage && featuredImage.startsWith("blob:")) {
-        const imageFile = await fetch(featuredImage).then((res) => res.blob());
-        const uploaded = await startImageUpload([
-          new File([imageFile], "featured-image.jpg"),
-        ]);
-        if (uploaded?.[0]?.url) {
-          featuredImageUrl = uploaded[0].url;
+        try {
+          const imageFile = await fetch(featuredImage).then((res) => res.blob());
+          const uploaded = await startImageUpload([
+            new File([imageFile], "featured-image.jpg"),
+          ]);
+          if (uploaded?.[0]?.url) {
+            featuredImageUrl = uploaded[0].url;
+          }
+        } catch (error) {
+          console.error("Image upload failed:", error);
         }
       }
 
-      // Upload video if changed
-      let videoUrl = lessonVideo;
+      // Upload video if it's a blob URL
       if (lessonVideo && lessonVideo.startsWith("blob:")) {
-        const videoFile = await fetch(lessonVideo).then((res) => res.blob());
-        const uploaded = await startVideoUpload([
-          new File([videoFile], "lesson-video.mp4"),
-        ]);
-        if (uploaded?.[0]?.url) {
-          videoUrl = uploaded[0].url;
+        try {
+          const videoFile = await fetch(lessonVideo).then((res) => res.blob());
+          const uploaded = await startVideoUpload([
+            new File([videoFile], "lesson-video.mp4"),
+          ]);
+          if (uploaded?.[0]?.url) {
+            videoUrl = uploaded[0].url;
+          }
+        } catch (error) {
+          console.error("Video upload failed:", error);
         }
       }
 
       // Upload new attachment files
-      let allExerciseFileUrls: string[] = [...attachmentUrls];
       if (attachmentFiles.length > 0) {
-        console.log("Uploading attachment files:", attachmentFiles);
         try {
           const uploaded = await startFileUpload(attachmentFiles);
-          console.log("Upload result:", uploaded);
           if (uploaded && uploaded.length > 0) {
-            const newFileUrls = uploaded.map((file) => file.url);
+            const newFileUrls = uploaded
+              .map((file) => file.url)
+              .filter((url): url is string => Boolean(url));
             allExerciseFileUrls = [...allExerciseFileUrls, ...newFileUrls];
-            console.log("All exercise file URLs:", allExerciseFileUrls);
           }
         } catch (uploadError) {
           console.error("File upload failed:", uploadError);
-          alert("Failed to upload some files. Please try again.");
+          alert("Failed to upload attachment files. Please try again.");
+          setIsSaving(false);
           return;
         }
       }
 
-      // Prepare lesson data
+      // Create final lesson data
       const lessonData: Lesson = {
         ...lesson,
         featuredImage: featuredImageUrl || "",
@@ -190,10 +229,12 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
         exerciseFiles: allExerciseFileUrls,
       };
 
-      console.log("Final lesson data:", lessonData);
-
-      // Call save callback
-      onSave(lessonData);
+      // Save the lesson
+      await onSave(lessonData);
+      
+      // Clear attachment files after successful save
+      setAttachmentFiles([]);
+      
     } catch (error) {
       console.error("Error saving lesson:", error);
       alert("Failed to save lesson. Please try again.");
@@ -202,7 +243,7 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
     }
   };
 
-  // Update lesson state when files change
+  // Update lesson state when media files change
   useEffect(() => {
     setLesson((prev) => ({
       ...prev,
@@ -212,7 +253,7 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
   }, [featuredImage, lessonVideo]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid gap-2">
         <Label htmlFor="name">Lesson Name *</Label>
         <Input
@@ -223,7 +264,8 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
           required
         />
       </div>
-      <div className="grid gap-2 mt-4">
+      
+      <div className="grid gap-2">
         <Label htmlFor="lessonContent">Lesson Content *</Label>
         <ReactQuill
           theme="snow"
@@ -239,7 +281,8 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
           }}
         />
       </div>
-      <div className="grid gap-2 mt-4">
+      
+      <div className="grid gap-2">
         <Label htmlFor="video">Lesson Video</Label>
         <VideoUpload
           className="h-[180px]"
@@ -247,7 +290,8 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
           setFile={setLessonVideo}
         />
       </div>
-      <div className="grid gap-2 mt-4">
+      
+      <div className="grid gap-2">
         <Label htmlFor="featuredImage">Featured Image</Label>
         <ImageUpload
           className="h-[180px]"
@@ -256,10 +300,10 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
         />
       </div>
 
-      <div className="grid gap-2 mt-4 w-[50%]">
+      <div className="grid gap-2 w-[50%]">
         <Label htmlFor="lessonResources">Extra Lesson Resources</Label>
         <div className="relative">
-          <Button variant={"outline"} type="button" disabled={isSaving} asChild>
+          <Button variant="outline" type="button" disabled={isSaving} asChild>
             <label
               htmlFor="attachments"
               className="cursor-pointer flex items-center gap-2 w-full justify-center"
@@ -286,12 +330,12 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
       </div>
 
       {(attachmentUrls.length > 0 || attachmentFiles.length > 0) && (
-        <div className="mt-4 space-y-2">
-          <Label>Uploaded Files</Label>
+        <div className="space-y-2">
+          <Label>Attached Files</Label>
           <div className="flex flex-wrap gap-4">
             {/* Existing attachments (URLs) */}
             {attachmentUrls.map((url, index) => {
-              const fileName = url.substring(url.lastIndexOf("/") + 1);
+              const fileName = url.substring(url.lastIndexOf("/") + 1) || `File ${index + 1}`;
               return (
                 <div
                   key={`existing-${index}`}
@@ -299,7 +343,7 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
                 >
                   <div>
                     <p className="text-sm font-medium">{fileName}</p>
-                    <p className="text-xs text-gray-500">Uploaded file</p>
+                    <p className="text-xs text-gray-500">Existing file</p>
                   </div>
                   <button
                     onClick={() => removeAttachment(index, false)}
@@ -317,12 +361,12 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
             {attachmentFiles.map((file, index) => (
               <div
                 key={`new-${index}`}
-                className="flex items-center space-x-2 p-2 bg-gray-100 rounded-md shadow-md"
+                className="flex items-center space-x-2 p-2 bg-blue-50 rounded-md shadow-md"
               >
                 <div>
                   <p className="text-sm font-medium">{file.name}</p>
                   <p className="text-xs text-gray-500">
-                    {(file.size / (1024 * 1024)).toFixed(2)} MB
+                    {(file.size / (1024 * 1024)).toFixed(2)} MB - New file
                   </p>
                 </div>
                 <button
@@ -339,11 +383,12 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
         </div>
       )}
 
-      <div className="flex !justify-between w-full mt-4 flex-row">
+      <div className="flex justify-between w-full flex-row">
         <Button
           variant="outline"
           type="button"
           onClick={() => window.history.back()}
+          disabled={isSaving}
         >
           Cancel
         </Button>
@@ -352,7 +397,7 @@ const LessonBuilder = ({ initialLesson, onSave }: LessonBuilderProps) => {
           type="submit"
           disabled={isSaving || !lesson.name.trim() || !lesson.content.trim()}
         >
-          {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
+          {isSaving && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
           {initialLesson ? "Update Lesson" : "Create Lesson"}
         </Button>
       </div>

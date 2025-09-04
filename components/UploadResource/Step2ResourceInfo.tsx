@@ -49,8 +49,6 @@ const Step2ResourceInfo = ({ onBack, uploadedFile, fileUrl, onResourceSaved }: S
     description: "",
     author: "",
     fileType: uploadedFile?.name.split('.').pop()?.toLowerCase() || "",
-    durationHrs: 0,
-    durationMins: 0,
   });
 
   const [addResource, { loading: isSaving }] = useMutation(ADD_RESOURCE_MUTATION, {
@@ -85,8 +83,6 @@ const Step2ResourceInfo = ({ onBack, uploadedFile, fileUrl, onResourceSaved }: S
       return;
     }
 
-    // Calculate total duration in minutes
-    const totalDurationMinutes = (formData.durationHrs * 60) + formData.durationMins;
     const organizationId = Cookies.get("organizationId") || "";
 
     try {
@@ -161,46 +157,6 @@ const Step2ResourceInfo = ({ onBack, uploadedFile, fileUrl, onResourceSaved }: S
           </div>
           
           <div className="grid gap-2 grid-cols-2 place-content-center">
-            <div className="flex flex-col gap-2">
-              <Label>Estimated Duration</Label>
-              <div className="flex gap-4">
-                <div>
-                  <Input
-                    id="duration-hrs"
-                    className="col-span-3"
-                    type="number"
-                    min="0"
-                    value={formData.durationHrs}
-                    onChange={(e) => handleInputChange("durationHrs", parseInt(e.target.value) || 0)}
-                    disabled={isSaving}
-                  />
-                  <Label
-                    htmlFor="duration-hrs"
-                    className="mt-1 text-xs text-gray-400"
-                  >
-                    Hrs
-                  </Label>
-                </div>
-                <div>
-                  <Input
-                    id="duration-mins"
-                    className="col-span-3"
-                    type="number"
-                    min="0"
-                    max="59"
-                    value={formData.durationMins}
-                    onChange={(e) => handleInputChange("durationMins", parseInt(e.target.value) || 0)}
-                    disabled={isSaving}
-                  />
-                  <Label
-                    htmlFor="duration-mins"
-                    className="mt-1 text-xs text-gray-400"
-                  >
-                    Mins
-                  </Label>
-                </div>
-              </div>
-            </div>
             
             <div className="flex flex-col gap-2">
               <Label htmlFor="fileType">File Type</Label>

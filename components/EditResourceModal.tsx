@@ -68,8 +68,6 @@ const EditResourceModal = ({
     description: "",
     author: "",
     fileType: "",
-    durationHrs: 0,
-    durationMins: 0,
   });
   
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -115,8 +113,6 @@ const EditResourceModal = ({
         description: resource.description,
         author: resource.author,
         fileType: resource.fileType,
-        durationHrs: 0, // You can add duration parsing if stored
-        durationMins: 0,
       });
     }
   }, [resource]);
@@ -168,9 +164,6 @@ const EditResourceModal = ({
       }
     }
 
-    // Calculate total duration in minutes
-    const totalDurationMinutes = (formData.durationHrs * 60) + formData.durationMins;
-
     try {
       await editResource({
         variables: {
@@ -196,8 +189,6 @@ const EditResourceModal = ({
       description: "",
       author: "",
       fileType: "",
-      durationHrs: 0,
-      durationMins: 0,
     });
     onClose();
   };
@@ -249,33 +240,6 @@ const EditResourceModal = ({
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Duration</Label>
-              <div className="flex gap-2">
-                <div>
-                  <Input
-                    type="number"
-                    min="0"
-                    placeholder="Hrs"
-                    value={formData.durationHrs}
-                    onChange={(e) => handleInputChange("durationHrs", parseInt(e.target.value) || 0)}
-                    disabled={isSaving || isUploadingNewFile}
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="number"
-                    min="0"
-                    max="59"
-                    placeholder="Mins"
-                    value={formData.durationMins}
-                    onChange={(e) => handleInputChange("durationMins", parseInt(e.target.value) || 0)}
-                    disabled={isSaving || isUploadingNewFile}
-                  />
-                </div>
-              </div>
-            </div>
-
             <div className="space-y-2">
               <Label>File Type</Label>
               <Select

@@ -324,3 +324,14 @@ export const ENROLL_COURSE = gql`
     }
   }
 `;
+
+export const GET_LMS_DASHBOARD_DATA = gql`
+  query GetLmsDashboardData {
+    getLmsDashboardData {
+      numberOfCompletedCourses
+      numberOfCourses
+      numberOfEmployees
+      numberOfEnrollments
+    }
+  }
+`;
