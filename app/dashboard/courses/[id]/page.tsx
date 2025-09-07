@@ -5,6 +5,7 @@ import CourseSlug from "@/components/Courses/CourseSlug";
 import React from "react";
 import SecondGrid from "@/components/Courses/SecondGrid";
 import { GET_ORGANIZATION_COURSE_BY_ID, GET_COURSE_MODULES } from "@/lib/graphql";
+import CourseLoader from "@/components/ui/CourseLoader";
 
 const CourseContent = ({
   params,
@@ -37,9 +38,7 @@ const CourseContent = ({
 
   if (courseLoading || modulesLoading) {
     return (
-      <div className="h-full flex items-center justify-center">
-        <div className="text-lg">Loading course details...</div>
-      </div>
+      <CourseLoader />
     );
   }
 
