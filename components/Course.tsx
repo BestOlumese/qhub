@@ -32,55 +32,52 @@ interface CourseProps {
 }
 
 const Course = ({ enrolled, courseData, enrollmentData }: CourseProps) => {
-
   return (
     <Link
       href={`/dashboard/courses/${courseData?._id}`}
-      className=" bg-primary-light cursor-pointer  py-4 flex gap-2 flex-col rounded-md"
+      className="bg-white border border-gray-200 hover:shadow-md transition rounded-lg overflow-hidden flex flex-col"
     >
-      <div className="px-4 w-full mb-4">
-        <div className="relative w-full h-32 mb-2">
-          <Image 
-            src={courseData?.displayImageUrl || "/courseimage.png"} 
-            alt={courseData?.title}
-            fill
-            className="object-cover rounded"
-          />
-        </div>
-        <h1 className="font-bold max-lg:text-sm my-2">
+      <div className="relative w-full h-40">
+        <Image
+          src={courseData?.displayImageUrl || "/courseimage.png"}
+          alt={courseData?.title}
+          fill
+          className="object-cover"
+        />
+      </div>
+
+      <div className="p-4 flex flex-col flex-1">
+        <h1 className="font-semibold text-base md:text-lg mb-2 line-clamp-2">
           {courseData?.title}
         </h1>
-        
-        {enrolled && enrollmentData ? (
-          <div>
-            <p className="text-xs my-2">
-              {courseData?.category} | {courseData?.duration}
-            </p>
 
-            <div className="flex gap-2 my-1 items-center">
-              <div className="w-[100%] lg:w-[60%]">
+        {enrolled && enrollmentData ? (
+          <>
+            <p className="text-xs text-gray-600 mb-2">
+              {courseData?.category} • {courseData?.duration}h
+            </p>
+            <div className="flex gap-2 my-2 items-center">
+              <div className="flex-1">
                 <ProgressBar max={100} value={enrollmentData.progress} />
               </div>
-              <p className="text-xs">
-                {enrollmentData.progress}% <span className="max-lg:hidden">completed</span>
+              <p className="text-xs whitespace-nowrap">
+                {enrollmentData.progress}%
               </p>
             </div>
-            <Button className="mt-4 bg-primary w-full">
+            <Button className="mt-auto w-full bg-primary">
               {enrollmentData.completed ? "Review" : "Continue"}
             </Button>
-          </div>
+          </>
         ) : (
-          <div>
-            <p className="text-sm">
+          <>
+            <p className="text-sm text-gray-700 line-clamp-3 flex-1">
               {courseData?.description || "No description available"}
             </p>
-
-            <div className="border-t text-sm border-t-black/20 w-full flex gap-4 mt-2 items-center p-2 pb-0 px-3 ">
-              <p>{courseData?.duration}</p>
-              <hr className="rotate-90 border border-black/20 w-6" />
-              <p>{courseData?.category}</p>
+            <div className="border-t text-xs border-gray-200 flex justify-between mt-3 pt-2 text-gray-600">
+              <span>{courseData?.duration}h</span>
+              <span>{courseData?.category}</span>
             </div>
-          </div>
+          </>
         )}
       </div>
     </Link>

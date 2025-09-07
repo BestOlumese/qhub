@@ -4,11 +4,20 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_LMS_DASHBOARD_DATA } from "@/lib/graphql";
 import { Card, CardHeader, CardContent } from "../ui/card";
+import SkeletonStats from "../ui/SkeletonStats";
 
 const HomepageStats = () => {
   const { data, loading, error } = useQuery(GET_LMS_DASHBOARD_DATA);
 
-  if (loading) return <p>Loading stats...</p>;
+  if (loading) {
+    return (
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <SkeletonStats key={i} />
+        ))}
+      </div>
+    );
+  }
   if (error) return <p>Error loading stats 😢</p>;
 
   const stats = [

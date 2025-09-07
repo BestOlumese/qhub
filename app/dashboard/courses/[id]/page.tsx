@@ -75,6 +75,7 @@ const CourseContent = ({
         />
         <SecondGrid 
           courseData={course}
+          modulesData={modules}
         />
       </div>
     </div>

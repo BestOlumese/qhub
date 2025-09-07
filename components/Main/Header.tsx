@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import accessbank from "@/public/accessbank.svg";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import { HiMenuAlt3 } from "react-icons/hi";
 
-const Header = () => {
+const Header = ({ onToggleSidebar }: { onToggleSidebar?: () => void }) => {
   const [fullName, setFullName] = useState("");
   const [role, setRole] = useState("");
   const [userPic, setUserPic] = useState("/avatar.png");
@@ -14,38 +14,49 @@ const Header = () => {
     const firstName = Cookies.get("firstName") || "";
     const lastName = Cookies.get("lastName") || "";
     const userRole = Cookies.get("role");
-    const logo = Cookies.get("logo") || "";
-
+    const orgLogo = Cookies.get("logo") || "";
 
     const name = `${firstName} ${lastName}`;
-    // const avatarUrl = `https://avatar.iran.liara.run/username?username=${firstName}+${lastName}`;
-    const readableRole = userRole === "organizationOwner" ? "Admin" : "Employee";
+    const readableRole =
+      userRole === "organizationOwner" ? "Admin" : "Employee";
 
     setFullName(name);
     setRole(readableRole);
-    // setUserPic(avatarUrl);
-    setLogo(logo);
+    setLogo(orgLogo);
   }, []);
 
   return (
-    <div className="py-6 px-2 shadow-md grid grid-cols-12 w-full items-center">
-      <div className="col-span-8 flex justify-between items-center px-4">
-        {logo && <Image src={logo} alt="logo" priority width={100} height={24} />}
+    <div className="py-4 px-4 shadow-md grid grid-cols-12 w-full items-center bg-white">
+      {/* Mobile Hamburger */}
+      <div className="col-span-2 md:hidden flex items-center">
+        <button
+          onClick={onToggleSidebar}
+          className="p-2 rounded-md hover:bg-gray-100 transition"
+        >
+          <HiMenuAlt3 size={28} />
+        </button>
       </div>
-      <div className="col-span-4 flex justify-between lg:px-10 items-center justify-self-end">
-        <div className="flex gap-4">
-          <Image
-            src={userPic}
-            alt="avatar"
-            priority
-            className="md:w-14 w-10 h-10 md:h-14 rounded-full"
-            width={50}
-            height={50}
-          />
-          <div className="flex justify-center flex-col max-xl:hidden">
-            <p className="mb-1 text-[14px] font-bold">{fullName}</p>
-            <p className="text-sm text-gray-600">{role}</p>
-          </div>
+
+      {/* Org Logo */}
+      <div className="col-span-6 md:col-span-8 flex items-center">
+        {logo && (
+          <Image src={logo} alt="logo" priority width={100} height={24} />
+        )}
+      </div>
+
+      {/* User Profile */}
+      <div className="col-span-4 flex justify-end items-center gap-3">
+        <Image
+          src={userPic}
+          alt="avatar"
+          priority
+          className="md:w-14 w-10 h-10 md:h-14 rounded-full"
+          width={50}
+          height={50}
+        />
+        <div className="hidden xl:flex flex-col justify-center">
+          <p className="mb-1 text-[14px] font-bold">{fullName}</p>
+          <p className="text-sm text-gray-600">{role}</p>
         </div>
       </div>
     </div>

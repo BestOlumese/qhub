@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import React from "react";
 import Course from "@/components/Course";
 import { GET_ORGANIZATION_COURSES } from "@/lib/graphql";
 import Cookies from "js-cookie";
 import { useQuery } from "@apollo/client";
+import CourseSkeleton from "../CourseSkeletonLoader";
 
 interface CourseData {
   _id: string;
@@ -43,8 +44,10 @@ const RecentCourses = () => {
     return (
       <div className="mt-6">
         <h3 className="mb-2 font-semibold">Recent courses</h3>
-        <div className="flex items-center justify-center h-32">
-          <div className="text-sm text-gray-500">Loading recent courses...</div>
+        <div className="grid grid-cols-4 max-lg:grid-cols-2 max-lg:gap-4 gap-6 w-full">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <CourseSkeleton key={i} />
+          ))}
         </div>
       </div>
     );
@@ -62,13 +65,16 @@ const RecentCourses = () => {
   }
 
   const coursesData = data?.getOrganizationCourses || [];
-  
+
   // Filter enrolled courses and sort by enrollment creation date (most recent first)
   const enrolledCourses = coursesData
     .filter((item: OrganizationCoursesData) => item.enrollment !== null)
     .sort((a: OrganizationCoursesData, b: OrganizationCoursesData) => {
       if (!a.enrollment || !b.enrollment) return 0;
-      return new Date(b.enrollment.createdAt).getTime() - new Date(a.enrollment.createdAt).getTime();
+      return (
+        new Date(b.enrollment.createdAt).getTime() -
+        new Date(a.enrollment.createdAt).getTime()
+      );
     })
     .slice(0, 4); // Get only the 4 most recent
 
@@ -78,7 +84,7 @@ const RecentCourses = () => {
       {enrolledCourses.length > 0 ? (
         <div className="grid grid-cols-4 max-lg:grid-cols-2 max-lg:gap-4 gap-6 w-full">
           {enrolledCourses.map((item: OrganizationCoursesData) => (
-            <Course 
+            <Course
               key={item.course._id}
               courseData={item.course}
               enrollmentData={item.enrollment}

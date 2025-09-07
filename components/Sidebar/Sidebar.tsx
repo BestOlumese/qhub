@@ -1,14 +1,13 @@
-"use client"
+"use client";
 import Image from "next/image";
 import React from "react";
 import logo from "@/public/sidebarlogo.svg";
-import Link from "next/link";
 import SidebarContent from "./SidebarContent";
 import { TbLogout2 } from "react-icons/tb";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
-const Sidebar = () => {
+const Sidebar = ({ onClose }: { onClose?: () => void }) => {
   const router = useRouter();
 
   const handleLogout = () => {
@@ -19,25 +18,35 @@ const Sidebar = () => {
     Cookies.remove("role");
     Cookies.remove("organizationId");
     Cookies.remove("logo");
-    router.push('/login')
-  }
+    router.push("/login");
+  };
 
   return (
-    <aside className=" max-md:hidden overflow-hidden bg-primary-light/50 py-6 text-black h-screen justify-between flex flex-col ">
+    <aside className="w-64 bg-white text-black h-full flex flex-col justify-between py-6 shadow-lg">
       <div>
-        <div className="flex  w-full justify-center items-center ">
+        {/* Logo */}
+        <div
+          className="flex justify-center items-center mb-6 cursor-pointer"
+          onClick={onClose}
+        >
           <Image
             src={logo}
             alt="logo"
             priority
-            className="max-lg:w-20 cursor-pointer"
+            className="w-28 max-md:w-24" // Increased size
           />
-          
         </div>
+
+        {/* Sidebar Links */}
         <SidebarContent />
       </div>
-      <div className="px-10">
-        <p onClick={handleLogout} className="flex cursor-pointer gap-2 items-center text-red-500">
+
+      {/* Logout */}
+      <div className="px-6">
+        <p
+          onClick={handleLogout}
+          className="flex cursor-pointer gap-2 items-center text-red-500 hover:text-red-600 transition"
+        >
           <TbLogout2 />
           Logout
         </p>

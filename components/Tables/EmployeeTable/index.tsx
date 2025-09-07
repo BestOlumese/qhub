@@ -3,8 +3,7 @@ import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "./DataTable";
 import { Button } from "../../ui/button";
-import { gql, useQuery } from "@apollo/client";
-
+import { useQuery } from "@apollo/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,8 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import { IconCircleCheckFilled, IconDots, IconTrash } from "@tabler/icons-react";
+import {
+  IconCircleCheckFilled,
+  IconDots,
+  IconTrash,
+} from "@tabler/icons-react";
 import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -23,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { GET_ORGANIZATION_USERS } from "@/lib/graphql";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface LmsUserType {
   _id: string;
@@ -67,7 +70,9 @@ const EmployeeTable = ({ organizationId }: { organizationId: string }) => {
       header: ({ column }) => (
         <Button
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          onClick={() =>
+            column.toggleSorting(column.getIsSorted() === "asc")
+          }
         >
           Name & Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
@@ -88,7 +93,8 @@ const EmployeeTable = ({ organizationId }: { organizationId: string }) => {
     {
       accessorKey: "createdAt",
       header: "Start Date",
-      cell: ({ getValue }) => new Date(getValue() as string).toLocaleDateString(),
+      cell: ({ getValue }) =>
+        new Date(getValue() as string).toLocaleDateString(),
     },
     {
       accessorKey: "role",
@@ -141,8 +147,51 @@ const EmployeeTable = ({ organizationId }: { organizationId: string }) => {
     },
   ];
 
-  if (loading) return <p>Loading users...</p>;
-  if (error) return <p className="text-red-500">Error: {error.message}</p>;
+  if (loading) {
+    return (
+      <div className="container mx-auto mt-5">
+        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
+          {/* Table Header Skeleton */}
+          <div className="grid grid-cols-6 px-6 py-3 bg-gray-50 text-sm font-medium text-gray-500">
+            <Skeleton className="h-4 w-5 rounded animate-pulse" />
+            <Skeleton className="h-4 w-32 rounded animate-pulse" />
+            <Skeleton className="h-4 w-24 rounded animate-pulse" />
+            <Skeleton className="h-4 w-16 rounded animate-pulse" />
+            <Skeleton className="h-4 w-12 rounded animate-pulse" />
+            <Skeleton className="h-4 w-10 rounded animate-pulse" />
+          </div>
+
+          {/* Table Body Skeleton */}
+          <div className="divide-y divide-gray-100">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="grid grid-cols-6 items-center px-6 py-4 animate-pulse"
+              >
+                <Skeleton className="h-5 w-5 rounded" />
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="h-4 w-28 rounded" />
+                  <Skeleton className="h-3 w-40 rounded" />
+                </div>
+                <Skeleton className="h-4 w-20 rounded" />
+                <Skeleton className="h-4 w-16 rounded" />
+                <Skeleton className="h-5 w-5 rounded-full" />
+                <Skeleton className="h-4 w-8 rounded" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <p className="text-red-500 text-center py-6">
+        Error loading users: {error.message}
+      </p>
+    );
+  }
 
   return (
     <div className="container mx-auto">

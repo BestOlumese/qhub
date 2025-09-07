@@ -5,6 +5,7 @@ import { Button } from "../ActionButton";
 import { FiClock, FiBook, FiUsers } from "react-icons/fi";
 import { ENROLL_COURSE } from "@/lib/graphql";
 import { GET_ORGANIZATION_COURSE_BY_ID } from "@/lib/graphql";
+import { useProgressTracking } from "@/hooks/useProgressTracking";
 import toast from "react-hot-toast";
 
 interface CourseData {
@@ -33,13 +34,52 @@ interface CourseResponse {
   enrollment: EnrollmentData | null;
 }
 
-interface SecondGridProps {
-  courseData: CourseResponse;
+interface ModuleData {
+  _id: string;
+  name: string;
+  summary: string;
+  course: CourseData;
+  lessons: LessonData[];
+  createdAt: string;
+  updatedAt: string;
 }
 
-const SecondGrid = ({ courseData }: SecondGridProps) => {
+interface LessonData {
+  _id: string;
+  contentUrl: string;
+  createdAt: string;
+  extraResourcesUrl: string;
+  imageUrl: string;
+  index: number;
+  name: string;
+  updatedAt: string;
+  videoUrl: string;
+}
+
+interface SecondGridProps {
+  courseData: CourseResponse;
+  modulesData?: ModuleData[]; // Add modules data to calculate real-time progress
+}
+
+const SecondGrid = ({ courseData, modulesData = [] }: SecondGridProps) => {
   const { course, enrollment } = courseData;
   const [isEnrolling, setIsEnrolling] = useState(false);
+
+  // Use progress tracking hook for real-time progress
+  const {
+    courseProgress: realTimeProgress,
+    completedLessons,
+    totalLessons,
+    loading: progressLoading
+  } = useProgressTracking({
+    courseId: course._id,
+    modulesData,
+    initialProgress: enrollment?.progress || 0
+  });
+
+  // Use real-time progress if available, otherwise fall back to enrollment progress
+  const displayProgress = modulesData.length > 0 ? realTimeProgress : (enrollment?.progress || 0);
+  const isCompleted = displayProgress >= 100;
 
   const [enrollCourseMutation] = useMutation(ENROLL_COURSE, {
     refetchQueries: [
@@ -86,12 +126,7 @@ const SecondGrid = ({ courseData }: SecondGridProps) => {
       icon: <FiUsers className="w-4 h-4" />,
       title: "Level",
       content: "Beginner" // You might want to add this to your GraphQL schema
-    },
-    // {
-    //   icon: <FiAward className="w-4 h-4" />,
-    //   title: "Certificate",
-    //   content: "Yes"
-    // }
+    }
   ];
 
   return (
@@ -141,21 +176,43 @@ const SecondGrid = ({ courseData }: SecondGridProps) => {
             <div className="bg-white rounded-lg p-3 mb-3">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-xs font-medium text-gray-600">Progress</span>
-                <span className="text-xs font-medium text-gray-800">{enrollment.progress}%</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-medium text-gray-800">
+                    {displayProgress.toFixed(1)}%
+                  </span>
+                  {progressLoading && (
+                    <div className="w-3 h-3 border border-primary border-t-transparent rounded-full animate-spin"></div>
+                  )}
+                </div>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
-                  className="bg-primary h-2 rounded-full transition-all duration-300" 
-                  style={{ width: `${enrollment.progress}%` }}
+                  className={`h-2 rounded-full transition-all duration-500 ${
+                    isCompleted ? 'bg-green-500' : 'bg-primary'
+                  }`}
+                  style={{ width: `${Math.min(displayProgress, 100)}%` }}
                 ></div>
               </div>
+              {/* Show lesson progress if modules data is available */}
+              {modulesData.length > 0 && (
+                <div className="mt-2 text-xs text-gray-600">
+                  <div className="flex justify-between items-center">
+                    <span>Lessons completed:</span>
+                    <span className="font-medium">
+                      {completedLessons.length}/{totalLessons}
+                    </span>
+                  </div>
+                  {isCompleted && (
+                    <div className="mt-1 flex items-center gap-1 text-green-600">
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="font-medium">Course Completed!</span>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-            {/* <button 
-              className="w-full bg-primary text-white py-2 px-4 rounded-md font-medium transition-all duration-200 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={false}
-            >
-              {enrollment.completed ? "Review Course" : "Continue Course"}
-            </button> */}
           </div>
         ) : (
           <div className="mb-4">
@@ -164,7 +221,7 @@ const SecondGrid = ({ courseData }: SecondGridProps) => {
               disabled={isEnrolling}
               className="w-full bg-primary text-white py-2 px-4 rounded-md font-medium transition-all duration-200 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isEnrolling ? "Enrolling..." : "Start Course"}
+              {isEnrolling ? "Enrolling..." : "🚀 Start Course"}
             </button>
           </div>
         )}

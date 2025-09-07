@@ -3,17 +3,13 @@ import React from "react";
 import { sidebar } from "@/lib/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import Cookies from "js-cookie";
 type Role = "employee" | "admin";
 const SidebarContent = () => {
   const pathname = usePathname();
 
-  const user: { role: Role } = {
-    role: "admin",
-  };
-
-  const role = user.role;
-  const isAdmin = role === "admin";
+  const role = Cookies.get("role") || "";
+  const isAdmin = role === "organizationOwner";
 
   return (
     <ul className="mt-6 flex flex-col gap-2.5">

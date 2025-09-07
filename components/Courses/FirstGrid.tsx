@@ -70,7 +70,7 @@ const FirstGrid = ({ courseData, modulesData }: FirstGridProps) => {
             <Overview courseData={courseData} />
           )}
           {active === "curriculum" && (
-            <Curriculum modulesData={modulesData} />
+            <Curriculum courseId={courseData.course._id} modulesData={modulesData} />
           )}
           {active === "instructor" && <Instructor />}
           {active === "reviews" && <Reviews />}

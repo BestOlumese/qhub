@@ -9,6 +9,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { GET_ORGANIZATION_COURSES } from "@/lib/graphql";
 import Cookies from "js-cookie";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Course = {
   _id: string;
@@ -88,9 +89,44 @@ const CourseTable = () => {
     // },
   ];
 
-  if (loading) return <p>Loading courses...</p>;
+  if (loading) {
+    return (
+      <div className="container mx-auto mt-5">
+        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow">
+          {/* Table Header Skeleton */}
+          <div className="grid grid-cols-6 px-6 py-3 bg-gray-50 text-sm font-medium text-gray-500">
+            <Skeleton className="h-4 w-5 rounded animate-pulse" />
+            <Skeleton className="h-4 w-32 rounded animate-pulse" />
+            <Skeleton className="h-4 w-24 rounded animate-pulse" />
+            <Skeleton className="h-4 w-16 rounded animate-pulse" />
+            <Skeleton className="h-4 w-12 rounded animate-pulse" />
+            <Skeleton className="h-4 w-10 rounded animate-pulse" />
+          </div>
+
+          {/* Table Body Skeleton */}
+          <div className="divide-y divide-gray-100">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="grid grid-cols-6 items-center px-6 py-4 animate-pulse"
+              >
+                <Skeleton className="h-5 w-5 rounded" />
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="h-4 w-28 rounded" />
+                  <Skeleton className="h-3 w-40 rounded" />
+                </div>
+                <Skeleton className="h-4 w-20 rounded" />
+                <Skeleton className="h-4 w-16 rounded" />
+                <Skeleton className="h-5 w-5 rounded-full" />
+                <Skeleton className="h-4 w-8 rounded" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (error) return <p>Error loading courses 😢</p>;
-  
 
   return (
     <div className="container mx-auto">

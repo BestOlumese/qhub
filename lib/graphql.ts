@@ -335,3 +335,24 @@ export const GET_LMS_DASHBOARD_DATA = gql`
     }
   }
 `;
+
+export const UPDATE_COURSE_ENROLLMENT = gql`
+  mutation UpdateCourseEnrollment(
+    $courseId: String!
+    $updateCourseEnrollmentInput: UpdateCourseEnrollmentInput!
+  ) {
+    updateCourseEnrollment(
+      courseId: $courseId
+      updateCourseEnrollmentInput: $updateCourseEnrollmentInput
+    ) {
+      _id
+      completed
+      course {
+        _id
+        title
+      }
+      progress
+      updatedAt
+    }
+  }
+`;

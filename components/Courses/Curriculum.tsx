@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { IoPlayOutline, IoDownloadOutline } from "react-icons/io5";
+import { IoPlayOutline, IoDownloadOutline, IoCheckmarkCircle } from "react-icons/io5";
 import { FaAngleRight } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { useProgressTracking } from "@/hooks/useProgressTracking";
 
 interface CourseData {
   _id: string;
@@ -40,15 +41,33 @@ interface ModuleData {
 
 interface CurriculumProps {
   modulesData: ModuleData[];
+  courseId: string;
+  initialProgress?: number;
 }
 
-const Curriculum = ({ modulesData }: CurriculumProps) => {
+const Curriculum = ({ modulesData, courseId, initialProgress = 0 }: CurriculumProps) => {
   const [clickedIndex, setClickedIndex] = useState<number | null>(null);
   const [playingVideo, setPlayingVideo] = useState<{
     url: string;
     lessonName: string;
+    lessonId: string;
     resources: string[];
   } | null>(null);
+
+  // Use progress tracking hook
+  const {
+    completedLessons,
+    courseProgress,
+    totalLessons,
+    handleVideoProgress,
+    markLessonComplete,
+    isLessonCompleted,
+    loading: progressLoading
+  } = useProgressTracking({
+    courseId,
+    modulesData,
+    initialProgress
+  });
 
   const toggleOpen = (index: number) => {
     setClickedIndex(clickedIndex === index ? null : index);
@@ -73,12 +92,18 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
     }
   };
 
-  const handlePlayVideo = (videoUrl: string, lessonName: string, resourcesUrl: string) => {
+  const handlePlayVideo = (
+    videoUrl: string,
+    lessonName: string,
+    lessonId: string,
+    resourcesUrl: string
+  ) => {
     if (videoUrl) {
       const resources = parseResources(resourcesUrl);
       setPlayingVideo({
         url: videoUrl,
         lessonName,
+        lessonId,
         resources
       });
     } else {
@@ -107,6 +132,19 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
     }
   };
 
+  // Handle video time update for progress tracking
+  const handleVideoTimeUpdate = (event: React.SyntheticEvent<HTMLVideoElement>) => {
+    if (!playingVideo) return;
+    
+    const video = event.currentTarget;
+    const currentTime = video.currentTime;
+    const duration = video.duration;
+    
+    if (duration > 0) {
+      handleVideoProgress(playingVideo.lessonId, currentTime, duration);
+    }
+  };
+
   if (!modulesData || modulesData.length === 0) {
     return (
       <motion.div
@@ -127,6 +165,30 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
       exit={{ opacity: 0, y: 100 }}
       className="w-full"
     >
+      {/* Progress Summary */}
+      {/* {totalLessons > 0 && (
+        <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="font-semibold text-blue-800">Course Progress</h3>
+            <span className="text-sm text-blue-600 font-medium">
+              {completedLessons.length}/{totalLessons} lessons completed
+            </span>
+          </div>
+          <div className="w-full bg-blue-200 rounded-full h-2.5">
+            <div
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2.5 rounded-full transition-all duration-500"
+              style={{ width: `${courseProgress}%` }}
+            ></div>
+          </div>
+          <p className="text-sm text-blue-700 mt-2">
+            {courseProgress}% complete
+            {progressLoading && (
+              <span className="ml-2 text-xs text-blue-500">Updating...</span>
+            )}
+          </p>
+        </div>
+      )} */}
+
       {modulesData.map((module, index) => (
         <motion.div
           key={module._id}
@@ -149,7 +211,7 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
             {clickedIndex === index && (
               <motion.div
                 initial={{ maxHeight: 0, opacity: 0, overflow: "hidden" }}
-                animate={{ maxHeight: 300, opacity: 1 }}
+                animate={{ maxHeight: 400, opacity: 1 }}
                 exit={{ maxHeight: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="overflow-hidden"
@@ -162,23 +224,48 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
                   
                   {module.lessons && module.lessons.length > 0 ? (
                     <div className="space-y-3">
-                      <h4 className="font-medium text-gray-800 text-sm">Lessons ({module.lessons.length})</h4>
+                      <h4 className="font-medium text-gray-800 text-sm">
+                        Lessons ({module.lessons.length})
+                      </h4>
                       {[...module.lessons]
                         .sort((a, b) => a.index - b.index)
                         .map((lesson) => {
                           const resources = parseResources(lesson.extraResourcesUrl);
+                          const isCompleted = isLessonCompleted(lesson._id);
+                          
                           return (
                             <div
                               key={lesson._id}
-                              className="border border-gray-100 rounded-lg p-4 hover:bg-gray-50 transition-colors"
+                              className={`border rounded-lg p-4 transition-all ${
+                                isCompleted 
+                                  ? 'border-green-200 bg-green-50' 
+                                  : 'border-gray-100 hover:bg-gray-50'
+                              }`}
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3 flex-1">
-                                  <div className="bg-primary/10 text-primary rounded-full w-8 h-8 flex items-center justify-center text-xs font-medium">
-                                    {lesson.index}
+                                  <div className={`rounded-full w-8 h-8 flex items-center justify-center text-xs font-medium ${
+                                    isCompleted
+                                      ? 'bg-green-100 text-green-700'
+                                      : 'bg-primary/10 text-primary'
+                                  }`}>
+                                    {isCompleted ? (
+                                      <IoCheckmarkCircle className="w-4 h-4" />
+                                    ) : (
+                                      lesson.index
+                                    )}
                                   </div>
                                   <div className="flex-1">
-                                    <h5 className="font-medium text-gray-800 text-sm">{lesson.name}</h5>
+                                    <h5 className={`font-medium text-sm ${
+                                      isCompleted ? 'text-green-800' : 'text-gray-800'
+                                    }`}>
+                                      {lesson.name}
+                                      {isCompleted && (
+                                        <span className="ml-2 text-xs bg-green-200 text-green-700 px-2 py-0.5 rounded-full">
+                                          Completed
+                                        </span>
+                                      )}
+                                    </h5>
                                     <p className="text-xs text-gray-500 mt-1">
                                       {new Date(lesson.createdAt).toLocaleDateString()}
                                     </p>
@@ -206,7 +293,12 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
                                 <div className="flex items-center gap-2">
                                   {lesson.videoUrl ? (
                                     <button
-                                      onClick={() => handlePlayVideo(lesson.videoUrl, lesson.name, lesson.extraResourcesUrl)}
+                                      onClick={() => handlePlayVideo(
+                                        lesson.videoUrl,
+                                        lesson.name,
+                                        lesson._id,
+                                        lesson.extraResourcesUrl
+                                      )}
                                       className="bg-primary w-8 h-8 cursor-pointer rounded-full flex items-center justify-center hover:bg-primary/90 transition-colors"
                                     >
                                       <IoPlayOutline className="text-white text-sm" />
@@ -215,6 +307,14 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
                                     <div className="bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center">
                                       <IoPlayOutline className="text-gray-500 text-sm" />
                                     </div>
+                                  )}
+                                  {!isCompleted && lesson.videoUrl && (
+                                    <button
+                                      onClick={() => markLessonComplete(lesson._id)}
+                                      className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
+                                    >
+                                      Mark Complete
+                                    </button>
                                   )}
                                 </div>
                               </div>
@@ -257,6 +357,7 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
                   autoPlay
                   className="w-full rounded-lg shadow-sm"
                   style={{ maxHeight: '60vh' }}
+                  onTimeUpdate={handleVideoTimeUpdate}
                   onError={() => {
                     toast.error("Error loading video");
                     setPlayingVideo(null);
@@ -264,6 +365,18 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
                 >
                   Your browser does not support the video tag.
                 </video>
+                
+                {/* Progress indicator */}
+                <div className="mt-2 text-sm text-gray-600">
+                  {isLessonCompleted(playingVideo.lessonId) ? (
+                    <div className="flex items-center gap-2 text-green-600">
+                      <IoCheckmarkCircle className="w-4 h-4" />
+                      Lesson completed!
+                    </div>
+                  ) : (
+                    <p>Watch 80% of the video to mark as complete</p>
+                  )}
+                </div>
               </div>
               
               {/* Resources Section */}
@@ -312,7 +425,7 @@ const Curriculum = ({ modulesData }: CurriculumProps) => {
           <h3 className="font-semibold text-blue-800 mb-2">Course Structure</h3>
           <p className="text-sm text-blue-700">
             This course contains {modulesData.length} module{modulesData.length !== 1 ? 's' : ''} with{' '}
-            {modulesData.reduce((total, module) => total + (module.lessons?.length || 0), 0)} total lessons.
+            {totalLessons} total lessons.
             Click on each module to view lessons and start learning.
           </p>
         </div>
