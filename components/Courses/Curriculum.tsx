@@ -1,5 +1,6 @@
+// components/Curriculum.tsx
 import React, { useState } from "react";
-import { IoPlayOutline, IoDownloadOutline, IoCheckmarkCircle } from "react-icons/io5";
+import { IoPlayOutline, IoDownloadOutline } from "react-icons/io5";
 import { FaAngleRight } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -54,18 +55,18 @@ const Curriculum = ({ modulesData, courseId, initialProgress = 0 }: CurriculumPr
     resources: string[];
   } | null>(null);
 
+  // Calculate total lessons
+  const totalLessons = modulesData.reduce((total, module) => {
+    return total + (module.lessons?.length || 0);
+  }, 0);
+
   // Use progress tracking hook
   const {
-    completedLessons,
-    courseProgress,
-    totalLessons,
     handleVideoProgress,
-    markLessonComplete,
-    isLessonCompleted,
     loading: progressLoading
   } = useProgressTracking({
     courseId,
-    modulesData,
+    totalLessons,
     initialProgress
   });
 
@@ -165,30 +166,6 @@ const Curriculum = ({ modulesData, courseId, initialProgress = 0 }: CurriculumPr
       exit={{ opacity: 0, y: 100 }}
       className="w-full"
     >
-      {/* Progress Summary */}
-      {/* {totalLessons > 0 && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200">
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="font-semibold text-blue-800">Course Progress</h3>
-            <span className="text-sm text-blue-600 font-medium">
-              {completedLessons.length}/{totalLessons} lessons completed
-            </span>
-          </div>
-          <div className="w-full bg-blue-200 rounded-full h-2.5">
-            <div
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2.5 rounded-full transition-all duration-500"
-              style={{ width: `${courseProgress}%` }}
-            ></div>
-          </div>
-          <p className="text-sm text-blue-700 mt-2">
-            {courseProgress}% complete
-            {progressLoading && (
-              <span className="ml-2 text-xs text-blue-500">Updating...</span>
-            )}
-          </p>
-        </div>
-      )} */}
-
       {modulesData.map((module, index) => (
         <motion.div
           key={module._id}
@@ -231,40 +208,20 @@ const Curriculum = ({ modulesData, courseId, initialProgress = 0 }: CurriculumPr
                         .sort((a, b) => a.index - b.index)
                         .map((lesson) => {
                           const resources = parseResources(lesson.extraResourcesUrl);
-                          const isCompleted = isLessonCompleted(lesson._id);
                           
                           return (
                             <div
                               key={lesson._id}
-                              className={`border rounded-lg p-4 transition-all ${
-                                isCompleted 
-                                  ? 'border-green-200 bg-green-50' 
-                                  : 'border-gray-100 hover:bg-gray-50'
-                              }`}
+                              className="border border-gray-100 rounded-lg p-4 transition-all hover:bg-gray-50"
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3 flex-1">
-                                  <div className={`rounded-full w-8 h-8 flex items-center justify-center text-xs font-medium ${
-                                    isCompleted
-                                      ? 'bg-green-100 text-green-700'
-                                      : 'bg-primary/10 text-primary'
-                                  }`}>
-                                    {isCompleted ? (
-                                      <IoCheckmarkCircle className="w-4 h-4" />
-                                    ) : (
-                                      lesson.index
-                                    )}
+                                  <div className="rounded-full w-8 h-8 flex items-center justify-center text-xs font-medium bg-primary/10 text-primary">
+                                    {lesson.index}
                                   </div>
                                   <div className="flex-1">
-                                    <h5 className={`font-medium text-sm ${
-                                      isCompleted ? 'text-green-800' : 'text-gray-800'
-                                    }`}>
+                                    <h5 className="font-medium text-sm text-gray-800">
                                       {lesson.name}
-                                      {isCompleted && (
-                                        <span className="ml-2 text-xs bg-green-200 text-green-700 px-2 py-0.5 rounded-full">
-                                          Completed
-                                        </span>
-                                      )}
                                     </h5>
                                     <p className="text-xs text-gray-500 mt-1">
                                       {new Date(lesson.createdAt).toLocaleDateString()}
@@ -307,14 +264,6 @@ const Curriculum = ({ modulesData, courseId, initialProgress = 0 }: CurriculumPr
                                     <div className="bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center">
                                       <IoPlayOutline className="text-gray-500 text-sm" />
                                     </div>
-                                  )}
-                                  {!isCompleted && lesson.videoUrl && (
-                                    <button
-                                      onClick={() => markLessonComplete(lesson._id)}
-                                      className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200 transition-colors"
-                                    >
-                                      Mark Complete
-                                    </button>
                                   )}
                                 </div>
                               </div>
@@ -368,13 +317,9 @@ const Curriculum = ({ modulesData, courseId, initialProgress = 0 }: CurriculumPr
                 
                 {/* Progress indicator */}
                 <div className="mt-2 text-sm text-gray-600">
-                  {isLessonCompleted(playingVideo.lessonId) ? (
-                    <div className="flex items-center gap-2 text-green-600">
-                      <IoCheckmarkCircle className="w-4 h-4" />
-                      Lesson completed!
-                    </div>
-                  ) : (
-                    <p>Watch 80% of the video to mark as complete</p>
+                  Watch 80% of the video to update your progress
+                  {progressLoading && (
+                    <span className="ml-2 text-xs text-blue-500">Updating...</span>
                   )}
                 </div>
               </div>
