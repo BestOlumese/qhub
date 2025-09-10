@@ -55,7 +55,8 @@ const AdminResourcesPage = () => {
 
   const { data, loading, error, refetch } = useQuery(GET_RESOURCES_QUERY, {
     variables: { organizationId },
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: "network-only", // always fetch from server
+    nextFetchPolicy: "cache-first", // after refetch, use cache
   });
 
   const [deleteResource, { loading: isDeleting }] = useMutation(DELETE_RESOURCE_MUTATION, {

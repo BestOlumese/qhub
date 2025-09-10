@@ -61,7 +61,7 @@ const Step1UploadFile = ({ onNext }: Step1Props) => {
       <SheetHeader>
         <SheetTitle className="px-6 border-b-2 pb-4">Upload Resource</SheetTitle>
         <SheetDescription className="px-6">
-          Easily upload and share educational documents with your students or
+          Easily upload and share educational documents with your employees or
           organization.
         </SheetDescription>
       </SheetHeader>

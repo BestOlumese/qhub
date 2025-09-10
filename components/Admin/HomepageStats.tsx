@@ -7,7 +7,10 @@ import { Card, CardHeader, CardContent } from "../ui/card";
 import SkeletonStats from "../ui/SkeletonStats";
 
 const HomepageStats = () => {
-  const { data, loading, error } = useQuery(GET_LMS_DASHBOARD_DATA);
+  const { data, loading, error } = useQuery(GET_LMS_DASHBOARD_DATA, {
+    fetchPolicy: "network-only", // always fetch from server
+    nextFetchPolicy: "cache-first", // after refetch, use cache
+  });
 
   if (loading) {
     return (

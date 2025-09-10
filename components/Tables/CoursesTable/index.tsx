@@ -27,6 +27,8 @@ const CourseTable = () => {
   const organizationId = Cookies.get("organizationId") || "";
   const { loading, error, data } = useQuery(GET_ORGANIZATION_COURSES, {
     variables: { organizationId: organizationId }, // pass dynamic ID here
+    fetchPolicy: "network-only", // always fetch from server
+    nextFetchPolicy: "cache-first", // after refetch, use cache
   });
 
   const columns: ColumnDef<Course>[] = [

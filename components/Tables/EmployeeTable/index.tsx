@@ -40,6 +40,8 @@ interface LmsUserType {
 const EmployeeTable = ({ organizationId }: { organizationId: string }) => {
   const { data, loading, error } = useQuery(GET_ORGANIZATION_USERS, {
     variables: { organizationId },
+    fetchPolicy: "network-only", // always fetch from server
+    nextFetchPolicy: "cache-first", // after refetch, use cache
   });
 
   const columns: ColumnDef<LmsUserType>[] = [

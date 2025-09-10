@@ -133,7 +133,7 @@ export function DataTable<TData, TValue>({
                 Delete
               </Button>
               <Button size="sm" className="bg-primary hover:bg-primary/90">
-                Invite Student
+                Invite Employee
               </Button>
             </div>
             <div className="flex-1 text-sm text-muted-foreground">

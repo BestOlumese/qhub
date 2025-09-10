@@ -82,7 +82,7 @@ const VideoUpload = ({
         <>
           {!dragging ? (
             <div className="flex items-center justify-center w-full h-full flex-col p-4 text-center">
-              <p className="text-sm">Drag & drop your video here</p>
+              <p className="text-sm">Drag & drop your file here</p>
               <p className="mt-1 text-xs text-gray-500">
                 File format: <b>.mp4, .mov</b>
               </p>

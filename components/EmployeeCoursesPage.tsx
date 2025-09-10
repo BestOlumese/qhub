@@ -13,6 +13,8 @@ const EmployeeCoursesPage = () => {
   const { data, loading, error } = useQuery(GET_ORGANIZATION_COURSES, {
     variables: { organizationId },
     errorPolicy: "all",
+    fetchPolicy: "network-only", // always fetch from server
+    nextFetchPolicy: "cache-first", // after refetch, use cache
   });
 
   if (error) {

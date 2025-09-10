@@ -130,7 +130,7 @@ const InviteEmployeeForm = ({ onBulkUpload }: { onBulkUpload: () => void }) => {
                 <SelectValue placeholder="Select Role" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="lmsStudent">Student</SelectItem>
+                <SelectItem value="lmsStudent">Employee</SelectItem>
                 <SelectItem value="organizationAdmin">Admin</SelectItem>
               </SelectContent>
             </Select>
