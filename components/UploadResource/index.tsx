@@ -48,7 +48,7 @@ const UploadResource = () => {
           Upload Resource
         </Button>
       </SheetTrigger>
-      <SheetContent className="px-0 py-4">
+      <SheetContent className="px-0 py-4 overflow-auto">
         {currentStep === 1 && <Step1UploadFile onNext={handleNextStep} />}
         {currentStep === 2 && (
           <Step2ResourceInfo

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import logo from "@/public/sidebarlogo.svg";
+import logo from "@/public/logo.jpg";
 import SidebarContent from "./SidebarContent";
 import { TbLogout2 } from "react-icons/tb";
 import Cookies from "js-cookie";
