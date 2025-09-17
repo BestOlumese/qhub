@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import logo from "@/public/logo.jpg";
+import logo from "@/public/logo.png";
 import SidebarContent from "./SidebarContent";
 import { TbLogout2 } from "react-icons/tb";
 import Cookies from "js-cookie";
@@ -33,7 +33,7 @@ const Sidebar = ({ onClose }: { onClose?: () => void }) => {
             src={logo}
             alt="logo"
             priority
-            className="w-28 max-md:w-24" // Increased size
+            className="w-20 max-md:w-16" // Increased size
           />
         </div>
 

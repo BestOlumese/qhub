@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import image from "@/public/signinimage.jpeg";
-import qhub from "@/public/qhub.svg";
+import Logo from "@/public/logo.png";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 const Signin: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -9,8 +9,8 @@ const Signin: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <div className="lg:grid lg:grid-cols-12 h-screen overflow-hidden bg-primary-light">
       <div className="lg:col-span-6 h-full w-full">
         <Image
-          src={qhub}
-          alt="Qhub Logo"
+          src={Logo}
+          alt="Logo"
           className="z-10 absolute top-4 left-4 sm:top-6 sm:left-6 max-[400px]:w-28"
           width={140}
           height={140}
